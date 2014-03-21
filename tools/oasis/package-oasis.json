@@ -1,0 +1,25 @@
+{
+    "name": "respec",
+    "version": "0.0.1",
+    "description": "Specification Edition Support Tool (OASIS Profile).",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs",
+        "example": "examples",
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "node ./tests/headless.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/sspeiche/respec.git"
+    },
+    "author": "Steve Speicher",
+    "devDependencies": {
+        "express":      "*"
+    ,   "requirejs":    "2.1.8"
+    ,   "prompt":       "0.2.12"
+    ,   "async":        "0.2.9"
+    }
+}
