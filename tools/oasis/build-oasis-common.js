@@ -2,8 +2,8 @@
 
 var fs   = require("fs")
 ,   pth  = require("path")
-,   b    = require("../builder")
-,   version = JSON.parse(fs.readFileSync(pth.join(__dirname, "../package-oasis.json"), "utf-8")).version
+,   b    = require("./builder")
+,   version = JSON.parse(fs.readFileSync(pth.join(__dirname, "./package-oasis.json"), "utf-8")).version
 ,   builds = pth.join(__dirname, "../../builds/oasis")
 ,   latest = pth.join(builds, "respec-oasis-common.js")
 ;
@@ -17,6 +17,8 @@ function buildOASIS (versionSnapshot, cb) {
         opts.version = versionSnapshot;
     }
     var versioned = pth.join(builds, "respec-oasis-common-" + opts.version + ".js");
+    console.log("Preparing to builds to: "+builds);
+    console.log("Preparing to write: "+versioned);
     b.build(opts, function () {
         if (versionSnapshot) fs.writeFileSync(versioned, fs.readFileSync(latest, "utf8"), { encoding: "utf8" });
         cb();

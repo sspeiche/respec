@@ -38,7 +38,7 @@ function build (options, cb) {
         try {
             fs.writeFileSync(config.out
                         ,   "/* ReSpec " + version +
-                            " - Robin Berjon, http://berjon.com/ (@robinberjon) */\n" +
+                            " - Robin Berjon, http://berjon.com/ (@robinberjon) \n" +
                             " - Steve Speicher, http://stevespeicher.me/ (@sspeiche) */\n" +
                             "/* Documentation: http://w3.org/respec/. */\n" +
                             "/* See original source for licenses: https://github.com/sspeiche/respec. */\n" +
