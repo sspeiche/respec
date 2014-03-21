@@ -31,7 +31,7 @@
 //          - type: optional MIME type
 //  - testSuiteURI: the URI to the test suite, if any
 //  - implementationReportURI: the URI to the implementation report, if any
-//  - noRecTrack: set to true if this document is not intended to be on the Recommendation track
+//  - noStdTrack: set to true if this document is not intended to be on the Recommendation track
 //  - edDraftURI: the URI of the Editor's Draft for this document, if any. Required if
 //      specStatus is set to "ED".
 //  - additionalCopyrightHolders: a copyright owner in addition to W3C (or the only one if specStatus
@@ -51,6 +51,7 @@
 //  - wgPublicList: the name of the mailing list where discussion takes place. Note that this cannot
 //      be an array as it is assumed that there is a single list to discuss the document, even if it
 //      is handled by multiple groups
+//  - wgShortName: the name of the TC that is seen in the URL for publications
 //  - charterDisclosureURI: used for IGs (when publishing IG-NOTEs) to provide a link to the IPR commitment
 //      defined in their charter.
 //  - addPatentNote: used to add patent-related information to the SotD, for instance if there's an open
@@ -79,10 +80,9 @@ define(
     ,"core/utils"
     ,"tmpl!oasis/templates/headers.html"
     ,"tmpl!oasis/templates/sotd.html"
-    ,"tmpl!oasis/templates/cgbg-headers.html"
-    ,"tmpl!oasiss/templates/cgbg-sotd.html"
+    ,"tmpl!oasis/templates/notices.html"
     ],
-    function (hb, utils, headersTmpl, sotdTmpl, cgbgHeadersTmpl, cgbgSotdTmpl) {
+    function (hb, utils, headersTmpl, sotdTmpl, noticesTmpl) {
         Handlebars.registerHelper("showPeople", function (name, items) {
             // stuff to handle RDFa
             var re = "", rp = "", rm = "", rn = "", rwu = "", rpu = "";
@@ -134,63 +134,43 @@ define(
 
         return {
             status2maturity:    {
-                FPWD:           "WD"
-            ,   LC:             "WD"
-            ,   FPLC:           "WD"
-            ,   "FPWD-NOTE":    "NOTE"
-            ,   "WD-NOTE":      "WD"
-            ,   "LC-NOTE":      "LC"
-            ,   "IG-NOTE":      "NOTE"
-            ,   "WG-NOTE":      "NOTE"
+                ED:             "ED"
+            ,   MO:             "NOTE"
+            ,   WD:             "WD"
+            ,   CS:             "CS"
+            ,   CSPR:           "CSPR"
+            ,   COS:            "COS"
+            ,   OS:             "OS"
+            ,   NOTE:           "NOTE"            	
+            ,   "TC-NOTE":      "NOTE"
             }
         ,   status2rdf: {
-                NOTE:           "w3p:NOTE",
-                WD:             "w3p:WD",
-                LC:             "w3p:LastCall",
-                CR:             "w3p:CR",
-                PR:             "w3p:PR",
-                REC:            "w3p:REC",
-                PER:            "w3p:PER",
-                RSCND:          "w3p:RSCND"
+                NOTE:           "oasis:NOTE",
+                WD:             "oasis:WD",
+                CS:             "oasis:CS",
+                CSPR:           "oasis:CSPR",
+                COS:            "oasis:COS",
+                OS:             "oasis:OS",
+                AE:             "oasis:AE"
             }
         ,   status2text: {
                 NOTE:           "Note"
-            ,   "WG-NOTE":      "Working Group Note"
-            ,   "CG-NOTE":      "Co-ordination Group Note"
-            ,   "IG-NOTE":      "Interest Group Note"
-            ,   "Member-SUBM":  "Member Submission"
-            ,   "Team-SUBM":    "Team Submission"
+            ,   "TC-NOTE":      "Technical Committee Note"
             ,   MO:             "Member-Only Document"
-            ,   ED:             "Editor's Draft"
-            ,   FPWD:           "First Public Working Draft"
-            ,   WD:             "Working Draft"
-            ,   "FPWD-NOTE":    "Working Group Note"
-            ,   "WD-NOTE":      "Working Draft"
-            ,   "LC-NOTE":      "Working Draft"
-            ,   FPLC:           "First Public and Last Call Working Draft"
-            ,   LC:             "Last Call Working Draft"
-            ,   CR:             "Candidate Recommendation"
-            ,   PR:             "Proposed Recommendation"
-            ,   PER:            "Proposed Edited Recommendation"
-            ,   REC:            "Recommendation"
-            ,   RSCND:          "Rescinded Recommendation"
+            ,   ED:             "Committee Specification Editor's Draft"
+            ,   WD:             "Committee Specification Working Draft"
+            ,   CS:             "Committee Specification Draft"
+            ,   CSPR:           "Committee Specification Public Review Draft"
+            ,   COS:            "Candidate OASIS Standard"
+            ,   OS:             "OASIS Standard"
+            ,   AE:             "Approved Errata"
             ,   unofficial:     "Unofficial Draft"
             ,   base:           "Document"
-            ,   finding:        "TAG Finding"
-            ,   "draft-finding": "Draft TAG Finding"
-            ,   "CG-DRAFT":     "Draft Community Group Specification"
-            ,   "CG-FINAL":     "Final Community Group Specification"
-            ,   "BG-DRAFT":     "Draft Business Group Specification"
-            ,   "BG-FINAL":     "Final Business Group Specification"
             }
-        ,   status2long:    {
-                "FPWD-NOTE":    "First Public Working Group Note"
-            ,   "LC-NOTE":      "Last Call Working Draft"
-            }
-        ,   recTrackStatus: ["FPWD", "WD", "FPLC", "LC", "CR", "PR", "PER", "REC"]
-        ,   noTrackStatus:  ["MO", "unofficial", "base", "finding", "draft-finding", "CG-DRAFT", "CG-FINAL", "BG-DRAFT", "BG-FINAL"]
-        ,   cgbg:           ["CG-DRAFT", "CG-FINAL", "BG-DRAFT", "BG-FINAL"]
-        ,   precededByAn:   ["ED", "IG-NOTE"]
+        ,   status2long:    { }
+        ,   stdTrackStatus: ["ED", "WD", "CS", "CSPR", "COS", "OS", "AE"]
+        ,   noTrackStatus:  ["unofficial", "base"]
+        ,   precededByAn:   ["ED"]
                         
         ,   run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/headers");
@@ -204,11 +184,9 @@ define(
                 if (!conf.license) conf.license = "oasis";
                 // NOTE: this is currently only available to the HTML WG
                 // this check will be relaxed later
-                conf.isCCBY = conf.license === "cc-by" && conf.wgPatentURI === "http://www.w3.org/2004/01/pp-impl/40318/status";
-                conf.isCGBG = $.inArray(conf.specStatus, this.cgbg) >= 0;
-                conf.isCGFinal = conf.isCGBG && /G-FINAL$/.test(conf.specStatus);
+                conf.isCCBY = conf.license === "cc-by";
                 if (!conf.specStatus) msg.pub("error", "Missing required configuration: specStatus");
-                if (!conf.isCGBG && !conf.shortName) msg.pub("error", "Missing required configuration: shortName");
+                if (!conf.shortName) msg.pub("error", "Missing required configuration: shortName");
                 conf.title = doc.title || "No Title";
                 if (!conf.subtitle) conf.subtitle = "";
                 if (!conf.publishDate) {
@@ -220,51 +198,31 @@ define(
                 conf.publishYear = conf.publishDate.getFullYear();
                 conf.publishHumanDate = utils.humanDate(conf.publishDate);
                 conf.isNoTrack = $.inArray(conf.specStatus, this.noTrackStatus) >= 0;
-                conf.isRecTrack = conf.noRecTrack ? false : $.inArray(conf.specStatus, this.recTrackStatus) >= 0;
+                conf.isStdTrack = conf.noRecTrack ? false : $.inArray(conf.specStatus, this.stdTrackStatus) >= 0;
                 conf.anOrA = $.inArray(conf.specStatus, this.precededByAn) >= 0 ? "an" : "a";
-                conf.isTagFinding = conf.specStatus === "finding" || conf.specStatus === "draft-finding";
                 if (!conf.edDraftURI) {
                     conf.edDraftURI = "";
                     if (conf.specStatus === "ED") msg.pub("warn", "Editor's Drafts should set edDraftURI.");
                 }
                 conf.maturity = (this.status2maturity[conf.specStatus]) ? this.status2maturity[conf.specStatus] : conf.specStatus;
-                var publishSpace = "TR";
-                if (conf.specStatus === "Member-SUBM") publishSpace = "Submission";
-                else if (conf.specStatus === "Team-SUBM") publishSpace = "TeamSubmission";
-                if (!conf.isCGBG) conf.thisVersion =  "http://www.w3.org/" + publishSpace + "/" +
-                                                      conf.publishDate.getFullYear() + "/" +
-                                                      conf.maturity + "-" + conf.shortName + "-" +
-                                                      utils.concatDate(conf.publishDate) + "/";
                 if (conf.specStatus === "ED") conf.thisVersion = conf.edDraftURI;
-                if (!conf.isCGBG) conf.latestVersion = "http://www.w3.org/" + publishSpace + "/" + conf.shortName + "/";
-                if (conf.isTagFinding) {
-                    conf.latestVersion = "http://www.w3.org/2001/tag/doc/" + conf.shortName;
-                    conf.thisVersion = conf.latestVersion + "-" + utils.concatDate(conf.publishDate, "-");
-                }
+                conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
                 if (conf.previousPublishDate) {
-                    if (!conf.previousMaturity && !conf.isTagFinding)
+                    if (!conf.previousMaturity)
                         msg.pub("error", "previousPublishDate is set, but not previousMaturity");
                     if (!(conf.previousPublishDate instanceof Date))
                         conf.previousPublishDate = utils.parseSimpleDate(conf.previousPublishDate);
                     var pmat = (this.status2maturity[conf.previousMaturity]) ? this.status2maturity[conf.previousMaturity] :
                                                                                conf.previousMaturity;
-                    if (conf.isTagFinding) {
-                        conf.prevVersion = conf.latestVersion + "-" + utils.concatDate(conf.previousPublishDate, "-");
-                    }
-                    else if (conf.isCGBG) {
-                        conf.prevVersion = conf.prevVersion || "";
-                    }
-                    else {
-                        conf.prevVersion = "http://www.w3.org/TR/" + conf.previousPublishDate.getFullYear() + "/" + pmat + "-" +
-                                           conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
-                    }
+                    conf.prevVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/" + conf.previousPublishDate.getFullYear() + "/" + pmat + "-" +
+                              conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
                 }
                 else {
-                    if (conf.specStatus !== "FPWD" && conf.specStatus !== "FPLC" && conf.specStatus !== "ED" && !conf.noRecTrack && !conf.isNoTrack)
+                    if (conf.specStatus !== "WD" && conf.specStatus !== "ED" && !conf.noStdTrack && !conf.isNoTrack)
                         msg.pub("error", "Document on track but no previous version.");
                     if (!conf.prevVersion) conf.prevVersion = "";
                 }
-                if (conf.prevRecShortname && !conf.prevRecURI) conf.prevRecURI = "http://www.w3.org/TR/" + conf.prevRecShortname;
+                if (conf.prevRecShortname && !conf.prevRecURI) conf.prevRecURI = "http://docs.oasis-open.org/" + conf.prevRecShortname;
                 if (!conf.editors || conf.editors.length === 0) msg.pub("error", "At least one editor is required");
                 var peopCheck = function (i, it) {
                     if (!it.name) msg.pub("error", "All authors and editors must have a name.");
@@ -292,21 +250,21 @@ define(
                 if (this.status2rdf[conf.specStatus]) {
                     conf.rdfStatus = this.status2rdf[conf.specStatus];
                 }
-                conf.showThisVersion =  (!conf.isNoTrack || conf.isTagFinding);
-                conf.showPreviousVersion = (conf.specStatus !== "FPWD" && conf.specStatus !== "FPLC" && conf.specStatus !== "ED" &&
+                conf.showThisVersion =  !conf.isNoTrack;
+                conf.showPreviousVersion = (conf.specStatus !== "WD" && conf.specStatus !== "ED" &&
                                            !conf.isNoTrack);
-                if (conf.isTagFinding) conf.showPreviousVersion = conf.previousPublishDate ? true : false;
-                conf.notYetRec = (conf.isRecTrack && conf.specStatus !== "REC");
-                conf.isRec = (conf.isRecTrack && conf.specStatus === "REC");
-                conf.notRec = (conf.specStatus !== "REC");
+                conf.notYetStd = (conf.isStdTrack && conf.specStatus !== "OS");
+                conf.isStd = (conf.isStdTrack && conf.specStatus === "OS");
+                conf.notStd = (conf.specStatus !== "OS");
                 conf.isUnofficial = conf.specStatus === "unofficial";
-                conf.prependW3C = !conf.isUnofficial;
+                conf.prependOASIS = !conf.isUnofficial;
                 conf.isED = (conf.specStatus === "ED");
-                conf.isLC = (conf.specStatus === "LC" || conf.specStatus === "FPLC");
-                conf.isCR = (conf.specStatus === "CR");
-                conf.isPR = (conf.specStatus === "PR");
-                conf.isMO = (conf.specStatus === "MO");
-                conf.isIGNote = (conf.specStatus === "IG-NOTE");
+                conf.isWD = (conf.specStatus === "WD");
+                conf.isCS = (conf.specStatus === "CS");
+                conf.isCSPR = (conf.specStatus === "CSPR");
+                conf.isCOS = (conf.specStatus === "COS");
+                conf.isOS = (conf.specStatus === "OS");
+                conf.isAE = (conf.specStatus === "AE");
                 conf.dashDate = utils.concatDate(conf.publishDate, "-");
                 conf.publishISODate = utils.isoDate(conf.publishDate) ;
                 // configuration done - yay!
@@ -321,7 +279,7 @@ define(
                     $("html").attr("about", "") ;
                     $("html").attr("property", "dcterms:language") ;
                     $("html").attr("content", "en") ;
-                    var prefixes = "bibo: http://purl.org/ontology/bibo/ w3p: http://www.w3.org/2001/02pd/rec54#";
+                    var prefixes = "bibo: http://purl.org/ontology/bibo/ oasis: http://docs.oasis-open.org/ns/spec";
                     if (conf.doRDFa != '1.1') {
                         $("html").attr("version", "XHTML+RDFa 1.0") ;
                         prefixes += " dcterms: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ xsd: http://www.w3.org/2001/XMLSchema#";
@@ -329,12 +287,12 @@ define(
                     $("html").attr("prefix", prefixes);
                 }
                 // insert into document and mark with microformat
-                $("body", doc).prepend($(conf.isCGBG ? cgbgHeadersTmpl(conf) : headersTmpl(conf)))
+                $("body", doc).prepend($(headersTmpl(conf)))
                               .addClass("h-entry");
 
                 // handle SotD
                 var $sotd = $("#sotd");
-                if ((conf.isCGBG || !conf.isNoTrack || conf.isTagFinding) && !$sotd.length)
+                if ((!conf.isNoTrack) && !$sotd.length)
                     msg.pub("error", "A custom SotD paragraph is required for your type of document.");
                 conf.sotdCustomParagraph = $sotd.html();
                 $sotd.remove();
@@ -353,26 +311,15 @@ define(
                     conf.multipleWGs = false;
                     conf.wgHTML = "<a href='" + conf.wgURI + "'>" + conf.wg + "</a>";
                 }
-                if (conf.isLC && !conf.lcEnd) msg.pub("error", "Status is LC but no lcEnd is specified");
-                if (conf.specStatus === "PR" && !conf.lcEnd) msg.pub("error", "Status is PR but no lcEnd is specified (needed to indicate end of previous LC)");
-                conf.humanLCEnd = utils.humanDate(conf.lcEnd || "");
-                if (conf.specStatus === "CR" && !conf.crEnd) msg.pub("error", "Status is CR but no crEnd is specified");
-                conf.humanCREnd = utils.humanDate(conf.crEnd || "");
-                if (conf.specStatus === "PR" && !conf.prEnd) msg.pub("error", "Status is PR but no prEnd is specified");
-                conf.humanPREnd = utils.humanDate(conf.prEnd || "");
+                if (conf.isCSPR && !conf.lcEnd) msg.pub("error", "Status is CSPR but no lcEnd is specified");
 
-                conf.recNotExpected = (!conf.isRecTrack && conf.maturity == "WD" && conf.specStatus !== "FPWD-NOTE");
-                if (conf.isIGNote && !conf.charterDisclosureURI)
-                    msg.pub("error", "IG-NOTEs must link to charter's disclosure section using charterDisclosureURI");
-                $(conf.isCGBG ? cgbgSotdTmpl(conf) : sotdTmpl(conf)).insertAfter($("#abstract"));
 
-                if (!conf.implementationReportURI && (conf.isCR || conf.isPR || conf.isRec)) {
-                    msg.pub("error", "CR, PR, and REC documents need to have an implementationReportURI defined.");
-                }
-                if (conf.isTagFinding && !conf.sotdCustomParagraph) {
-                    msg.pub("error", "ReSpec does not support automated SotD generation for TAG findings, " +
-                                     "please specify one using a <code><section></code> element with ID=sotd.");
-                }
+                conf.stdNotExpected = (!conf.isStdTrack && conf.maturity == "WD");
+                
+                var $notices = $("#notices");
+                
+
+                $(sotdTmpl(conf)).insertAfter($("#abstract"));
 
                 msg.pub("end", "oasis/headers");
                 cb();
