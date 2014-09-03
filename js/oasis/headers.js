@@ -17,6 +17,7 @@
 //          - mailto: the person's email
 //          - note: a note on the person (e.g. former editor)
 //  - authors: an array of people who are contributing authors of the document.
+//  - chairs: an array of people who are chairing the TC producing this document.
 //  - subtitle: a subtitle for the specification
 //  - publishDate: the date to use for the publication, default to document.lastModified, and
 //      failing that to now. The format is YYYY-MM-DD or a Date object.
@@ -134,42 +135,46 @@ define(
 
         return {
             status2maturity:    {
-                ED:             "ED"
-            ,   MO:             "NOTE"
-            ,   WD:             "WD"
+                WD:             "WD"
+            ,   CSD:            "CSD"
+            ,   CSPRD:          "CSPRD"
             ,   CS:             "CS"
-            ,   CSPR:           "CSPR"
             ,   COS:            "COS"
             ,   OS:             "OS"
-            ,   NOTE:           "NOTE"            	
-            ,   "TC-NOTE":      "NOTE"
+            ,   Errata:         "Errata"
+            ,   CND:            "CND"
+            ,   CNPRD:          "CNPRD"
+            ,   CN:             "CN"
             }
         ,   status2rdf: {
-                NOTE:           "oasis:NOTE",
                 WD:             "oasis:WD",
+                CSD:            "oasis:CSD",
+                CSPRD:          "oasis:CSPRD",
                 CS:             "oasis:CS",
-                CSPR:           "oasis:CSPR",
                 COS:            "oasis:COS",
                 OS:             "oasis:OS",
-                AE:             "oasis:AE"
+                Errata:         "oasis:Errata",
+                CND:            "oasis:CND",
+                CNPRD:          "oasis:CNPRD",
+                CN:             "oasis:CN"
             }
         ,   status2text: {
-                NOTE:           "Note"
-            ,   "TC-NOTE":      "Technical Committee Note"
-            ,   MO:             "Member-Only Document"
-            ,   ED:             "Committee Specification Editor's Draft"
-            ,   WD:             "Committee Specification Working Draft"
-            ,   CS:             "Committee Specification Draft"
-            ,   CSPR:           "Committee Specification Public Review Draft"
-            ,   COS:            "Candidate OASIS Standard"
-            ,   OS:             "OASIS Standard"
-            ,   AE:             "Approved Errata"
-            ,   unofficial:     "Unofficial Draft"
-            ,   base:           "Document"
+            		WD:             "Working Draft"
+                ,   CSD:            "Committee Specification Draft"
+                ,   CSPRD:          "Committee Specification Public Review Draft"
+                ,   CS:             "Committee Specification"
+                ,   COS:            "Candidate OASIS Standard"
+                ,   OS:             "OASIS Standard"
+                ,   Errata:         "Approved Errata"
+                ,   CND:            "Committee Note Draft"
+                ,   CNPRD:          "Committee Note Public Review Draft"
+                ,   CN:             "Committee Note"
+                ,   unofficial:     "Unofficial Draft"
+                ,   base:           "Document"
             }
         ,   status2long:    { }
-        ,   stdTrackStatus: ["ED", "WD", "CS", "CSPR", "COS", "OS", "AE"]
-        ,   noTrackStatus:  ["unofficial", "base"]
+        ,   stdTrackStatus: ["WD", "CSD", "CSPRD", "CS", "COS", "OS", "Errata"]
+        ,   noTrackStatus:  ["CND", "CNPRD", "CN", "unofficial", "base"]
         ,   precededByAn:   ["ED"]
                         
         ,   run:    function (conf, doc, cb, msg) {
@@ -202,10 +207,11 @@ define(
                 conf.anOrA = $.inArray(conf.specStatus, this.precededByAn) >= 0 ? "an" : "a";
                 if (!conf.edDraftURI) {
                     conf.edDraftURI = "";
-                    if (conf.specStatus === "ED") msg.pub("warn", "Editor's Drafts should set edDraftURI.");
+                    if (conf.specStatus === "WD") msg.pub("warn", "Working Drafts should set edDraftURI.");
                 }
                 conf.maturity = (this.status2maturity[conf.specStatus]) ? this.status2maturity[conf.specStatus] : conf.specStatus;
                 if (conf.specStatus === "ED") conf.thisVersion = conf.edDraftURI;
+                // TODO: Determine right URI production
                 conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
                 if (conf.previousPublishDate) {
                     if (!conf.previousMaturity)
@@ -218,7 +224,7 @@ define(
                               conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
                 }
                 else {
-                    if (conf.specStatus !== "WD" && conf.specStatus !== "ED" && !conf.noStdTrack && !conf.isNoTrack)
+                    if (conf.specStatus !== "WD" && !conf.noStdTrack && !conf.isNoTrack)
                         msg.pub("error", "Document on track but no previous version.");
                     if (!conf.prevVersion) conf.prevVersion = "";
                 }
@@ -229,8 +235,10 @@ define(
                 };
                 $.each(conf.editors, peopCheck);
                 $.each(conf.authors || [], peopCheck);
+                $.each(conf.chairs || [], peopCheck);
                 conf.multipleEditors = conf.editors.length > 1;
                 conf.multipleAuthors = conf.authors && conf.authors.length > 1;
+                conf.multipleChairs = conf.chairs && conf.chairs.length > 1;
                 $.each(conf.alternateFormats || [], function (i, it) {
                     if (!it.uri || !it.label) msg.pub("error", "All alternate formats must have a uri and a label.");
                 });
@@ -251,20 +259,19 @@ define(
                     conf.rdfStatus = this.status2rdf[conf.specStatus];
                 }
                 conf.showThisVersion =  !conf.isNoTrack;
-                conf.showPreviousVersion = (conf.specStatus !== "WD" && conf.specStatus !== "ED" &&
+                conf.showPreviousVersion = (conf.specStatus !== "WD"  &&
                                            !conf.isNoTrack);
                 conf.notYetStd = (conf.isStdTrack && conf.specStatus !== "OS");
                 conf.isStd = (conf.isStdTrack && conf.specStatus === "OS");
                 conf.notStd = (conf.specStatus !== "OS");
                 conf.isUnofficial = conf.specStatus === "unofficial";
                 conf.prependOASIS = !conf.isUnofficial;
-                conf.isED = (conf.specStatus === "ED");
                 conf.isWD = (conf.specStatus === "WD");
                 conf.isCS = (conf.specStatus === "CS");
-                conf.isCSPR = (conf.specStatus === "CSPR");
+                conf.isCSPR = (conf.specStatus === "CSPRD");
                 conf.isCOS = (conf.specStatus === "COS");
                 conf.isOS = (conf.specStatus === "OS");
-                conf.isAE = (conf.specStatus === "AE");
+                conf.isAE = (conf.specStatus === "Errata");
                 conf.dashDate = utils.concatDate(conf.publishDate, "-");
                 conf.publishISODate = utils.isoDate(conf.publishDate) ;
                 // configuration done - yay!

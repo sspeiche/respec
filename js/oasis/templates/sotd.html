@@ -1,9 +1,9 @@
 <section id='sotd' class='introductory'><h2>Status</h2>
   {{#if isUnofficial}}
     <p>
-      This document is merely a public working draft of a potential specification. It has
+      This document is merely a public working draft of a potential committee specification. It has
       no official standing of any kind and does not represent the support or consensus of any
-      standards organisation.
+      standards organization.
     </p>
     {{{sotdCustomParagraph}}}
   {{else}}
@@ -17,10 +17,9 @@
      {{else}}
        <p>
          <em>This section describes the status of this document at the time of its publication.
-         Other documents may supersede this document. A list of current OASIS publications and the
-         latest revision of this technical report can be found in the <a
-         href='http://www.w3.org/TR/'>W3C technical reports index</a> at
-         http://www.w3.org/TR/.</em>
+         Other documents may supersede this document. A list of current OASIS publications can be found in the <a
+         href='https://www.oasis-open.org/standards'>OASIS standards page</a> at
+         https://www.oasis-open.org/standards.</em>
        </p>
        {{{sotdCustomParagraph}}}
        <p>
@@ -30,25 +29,25 @@
          {{/if}}
          {{#unless isPR}}
            If you wish to make comments regarding this document, please send them to 
-           <a href='mailto:{{wgPublicList}}@w3.org{{#if subjectPrefix}}?subject={{subjectPrefix}}{{/if}}'>{{wgPublicList}}@w3.org</a> 
-           (<a href='mailto:{{wgPublicList}}-request@w3.org?subject=subscribe'>subscribe</a>,
-           <a
-             href='http://lists.w3.org/Archives/Public/{{wgPublicList}}/'>archives</a>){{#if subjectPrefix}}
+           <a href='mailto:{{wgPublicList}}@lists.open-oasis.org{{#if subjectPrefix}}?subject={{subjectPrefix}}{{/if}}'>{{wgPublicList}}@lists.open-oasis.org</a> 
+           <!-- <a href='mailto:{{wgPublicList}}-request@lists.open-oasis.org?subject=subscribe'>subscribe</a>, -->
+           (<a
+             href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>){{#if subjectPrefix}}
              with <code>{{subjectPrefix}}</code> at the start of your email's subject{{/if}}.
          {{/unless}}
          {{#if isLC}}The Last Call period ends {{humanLCEnd}}.{{/if}}
          {{#if isCR}}
-           W3C publishes a Candidate Recommendation to indicate that the document is believed to be
-           stable and to encourage implementation by the developer community. This Candidate
-           Recommendation is expected to advance to Proposed Recommendation no earlier than
+           OASIS publishes a Committee Specification Public Review Draft to indicate that the document is believed to be
+           stable and to encourage implementation by the developer community. This Committee Specification
+           Public Review Draft is expected to advance to Committee Specification no earlier than
            {{humanCREnd}}.
          {{/if}}
          {{#if isPR}}
-             The W3C Membership and other interested parties are invited to review the document and
+             The OASIS Membership and other interested parties are invited to review the document and
              send comments to
-             <a rel='discussion' href='mailto:{{wgPublicList}}@w3.org'>{{wgPublicList}}@w3.org</a> 
-             (<a href='mailto:{{wgPublicList}}-request@w3.org?subject=subscribe'>subscribe</a>,
-             <a href='http://lists.w3.org/Archives/Public/{{wgPublicList}}/'>archives</a>)
+             <a rel='discussion' href='mailto:{{wgPublicList}}@lists.open-oasis.org'>{{wgPublicList}}@lists.open-oasis.org</a> 
+             <!-- <a href='mailto:{{wgPublicList}}-request@lists.open-oasis.org?subject=subscribe'>subscribe</a>,  -->
+             (<a href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>)
              through {{humanPREnd}}. Advisory Committee Representatives should consult their
              <a href='https://www.w3.org/2002/09/wbs/myQuestionnaires'>WBS questionnaires</a>. 
              Note that substantive technical comments were expected during the Last Call review
@@ -59,13 +58,13 @@
        </p>
        {{#if implementationReportURI}}
          <p>
-           Please see the Working Group's  <a href='{{implementationReportURI}}'>implementation
+           Please see the Technical Committee's  <a href='{{implementationReportURI}}'>implementation
            report</a>.
          </p>
        {{/if}}
        {{#if notRec}}
          <p>
-           Publication as {{anOrA}} {{textStatus}} does not imply endorsement by the W3C
+           Publication as {{anOrA}} {{textStatus}} does not imply endorsement by the OASIS
            Membership. This is a draft document and may be updated, replaced or obsoleted by other
            documents at any time. It is inappropriate to cite this document as other than work in
            progress.

@@ -28,12 +28,6 @@
       <dt>Implementation report:</dt>
       <dd><a href='{{implementationReportURI}}'>{{implementationReportURI}}</a></dd>
     {{/if}}
-    {{#if isED}}
-      {{#if prevED}}
-        <dt>Previous editor's draft:</dt>
-        <dd><a href='{{prevED}}'>{{prevED}}</a></dd>
-      {{/if}}
-    {{/if}}
     {{#if showPreviousVersion}}
       <dt>Previous version:</dt>
       <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevVersion}}'>{{prevVersion}}</a></dd>
@@ -46,6 +40,10 @@
           <dt>Latest Recommendation:</dt>
           <dd><a href='{{prevRecURI}}'>{{prevRecURI}}</a></dd>
       {{/if}}
+    {{/if}}
+    {{#if chairs}}
+      <dt>Chair{{#if multipleChairs}}s{{/if}}:</dt>
+      {{showPeople "Chair" chairs}}
     {{/if}}
     <dt>Editor{{#if multipleEditors}}s{{/if}}:</dt>
     {{showPeople "Editor" editors}}
