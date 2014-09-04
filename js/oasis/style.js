@@ -11,7 +11,12 @@ define(
             run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/style");
                 if (!conf.specStatus) msg.pub("error", "Configuration 'specStatus' is not set, required for oasis/style");
-                var css = "//sspeiche.github.io/respec/js/oasis/css/" + conf.specStatus + ".css";
+            	var css = "//sspeiche.github.io/respec/js/oasis/css/" ;
+            	if (conf.specStatus == "WD") {
+                	css += conf.specStatus + ".css";
+            	} else {
+            		css += "default.css";
+            	}
                 utils.linkCSS(doc, css);
                 msg.pub("end", "oasis/style");
                 cb();
