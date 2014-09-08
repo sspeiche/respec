@@ -30,9 +30,8 @@
          {{#unless isPR}}
            If you wish to make comments regarding this document, please send them to 
            <a href='mailto:{{wgPublicList}}@lists.open-oasis.org{{#if subjectPrefix}}?subject={{subjectPrefix}}{{/if}}'>{{wgPublicList}}@lists.open-oasis.org</a> 
-           <!-- <a href='mailto:{{wgPublicList}}-request@lists.open-oasis.org?subject=subscribe'>subscribe</a>, -->
-           (<a
-             href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>){{#if subjectPrefix}}
+            (<a href='mailto:{{wgPublicList}}-subscribe@lists.open-oasis.org?subject=subscribe'>subscribe</a>, 
+             <a href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>){{#if subjectPrefix}}
              with <code>{{subjectPrefix}}</code> at the start of your email's subject{{/if}}.
          {{/unless}}
          {{#if isLC}}The Last Call period ends {{humanLCEnd}}.{{/if}}
@@ -46,12 +45,9 @@
              The OASIS Membership and other interested parties are invited to review the document and
              send comments to
              <a rel='discussion' href='mailto:{{wgPublicList}}@lists.open-oasis.org'>{{wgPublicList}}@lists.open-oasis.org</a> 
-             <!-- <a href='mailto:{{wgPublicList}}-request@lists.open-oasis.org?subject=subscribe'>subscribe</a>,  -->
-             (<a href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>)
-             through {{humanPREnd}}. Advisory Committee Representatives should consult their
-             <a href='https://www.w3.org/2002/09/wbs/myQuestionnaires'>WBS questionnaires</a>. 
-             Note that substantive technical comments were expected during the Last Call review
-             period that ended {{humanLCEnd}}.
+             (<a href='mailto:{{wgPublicList}}-subscribe@lists.open-oasis.org?subject=subscribe'>subscribe</a>,
+             <a href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>)
+             through {{humanPREnd}}.
          {{else}}
            All comments are welcome.
          {{/if}}
