@@ -212,7 +212,7 @@ define(
                 conf.maturity = (this.status2maturity[conf.specStatus]) ? this.status2maturity[conf.specStatus] : conf.specStatus;
                 if (conf.specStatus === "ED") conf.thisVersion = conf.edDraftURI;
                 // TODO: Determine right URI production
-                conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
+                // conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
                 if (conf.previousPublishDate) {
                     if (!conf.previousMaturity)
                         msg.pub("error", "previousPublishDate is set, but not previousMaturity");
