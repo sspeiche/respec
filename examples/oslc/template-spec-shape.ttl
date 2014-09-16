@@ -1,0 +1,16 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix : <http://open-services.net/ns/xxx#> .
+
+<> a oslc:ResourceShape ;
+	dcterms:title "Shape for template resource" ;
+	oslc:describes :TemplateClass ;
+	oslc:property <#dcterms-title>, <#xxx-prop> .
+
+<#dcterms-title> a oslc:Property ;
+	oslc:propertyDefinition dcterms:title ;
+	oslc:occurs oslc:Exactly-one .
+
+<#xxx-prop> a oslc:Property ;
+	oslc:propertyDefinition :templateProperty ;
+	oslc:occurs oslc:Zero-or-one .	

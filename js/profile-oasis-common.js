@@ -25,7 +25,7 @@ define([
         ,   "core/style"
         ,   "oasis/style"
         ,   "oasis/headers"
-        ,   "oasis/abstract"
+/*        ,   "oasis/abstract" */
         ,   "oasis/conformance"
         ,   "core/data-transform"
         ,   "core/data-include"
