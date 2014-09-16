@@ -293,16 +293,26 @@ define(
                     }
                     $("html").attr("prefix", prefixes);
                 }
-                // insert into document and mark with microformat
-                $("body", doc).prepend($(headersTmpl(conf)))
-                              .addClass("h-entry");
-
+                
+                // handle abstract
+                var $shortAbstract = $("#abstract");
+                if (!$shortAbstract.length)
+                    msg.pub("error", "A short abstract is required.");
+                conf.shortAbstract = $shortAbstract.html();
+                $shortAbstract.remove();
+                
                 // handle SotD
                 var $sotd = $("#sotd");
                 if ((!conf.isNoTrack) && !$sotd.length)
                     msg.pub("error", "A custom SotD paragraph is required for your type of document.");
                 conf.sotdCustomParagraph = $sotd.html();
                 $sotd.remove();
+                conf.status = sotdTmpl(conf);
+
+                // insert into document and mark with microformat
+                $("body", doc).prepend($(headersTmpl(conf)))
+                              .addClass("h-entry");
+
                 if ($.isArray(conf.wg)) {
                     conf.multipleWGs = conf.wg.length > 1;
                     conf.wgHTML = utils.joinAnd($.isArray(conf.wg) ? conf.wg : [conf.wg], function (wg, idx) {
@@ -320,13 +330,12 @@ define(
                 }
                 if (conf.isCSPR && !conf.lcEnd) msg.pub("error", "Status is CSPR but no lcEnd is specified");
 
-
                 conf.stdNotExpected = (!conf.isStdTrack && conf.maturity == "WD");
                 
-                var $notices = $("#notices");
                 
+                var $notices = $("#notices");
 
-                $(sotdTmpl(conf)).insertAfter($("#abstract"));
+                $(noticesTmpl(conf)).insertBefore($("#toc"));
 
                 msg.pub("end", "oasis/headers");
                 cb();

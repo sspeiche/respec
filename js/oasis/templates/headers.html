@@ -1,60 +1,59 @@
 <div class='head'>
-  <p>
+  <p class='logo'>
     {{#if prependOASIS}}
-      <a href='http://www.oasis-open.org/'><img src='http://www.oasis-open.org/sites/www.oasis-open.org/files/logo.png' alt='OASIS'/></a>
+      <a href='http://www.oasis-open.org/'><img width='203' height='54' src='http://docs.oasis-open.org/templates/OASISLogo.jpg' alt='OASIS' border='0'/></a>
+      <hr/>
     {{/if}}
   </p>
-  <h1 class='title p-name' id='title'{{#if doRDFa}} property='dcterms:title'{{/if}}>{{title}}</h1>
-  {{#if subtitle}}
-    <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{subtitle}}</h2>
+  <h1 class='title' id='title'{{#if doRDFa}} property='dcterms:title'{{/if}}>{{title}}</h1>
+  {{#if textStatus}}
+    <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{#if prependOASIS}}OASIS {{/if}}{{textStatus}}</h2>
   {{/if}}
-  <h2 {{#if doRDFa}}property="dcterms:issued" datatype="xsd:dateTime" content="{{publishISODate}}"{{/if}}>{{#if prependOASIS}}OASIS {{/if}}{{textStatus}} <time class='dt-published' datetime='{{dashDate}}'>{{publishHumanDate}}</time></h2>
+  <h2 {{#if doRDFa}}property="dcterms:issued" datatype="xsd:dateTime" content="{{publishISODate}}"{{/if}}><time class='dt-published' datetime='{{dashDate}}'>{{publishHumanDate}}</time></h2>
+  <dl>
+    <dt><span class='loc-heading' style='font-size: 125%'>Specification URIs</span></dt>
+  </dl>
   <dl>
     {{#unless isNoTrack}}
-      <dt>This version:</dt>
+      <br/><dt class='loc-heading'>This version:</dt>
       <dd><a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a></dd>
-      <dt>Latest published version:</dt>
+      <br/><dt class='loc-heading'>Latest versions:</dt>
       <dd>{{#if latestVersion}}<a href='{{latestVersion}}'>{{latestVersion}}</a>{{else}}none{{/if}}</dd>
     {{/unless}}
     {{#if edDraftURI}}
-      <dt>Latest editor's draft:</dt>
+      <br/><dt class='loc-heading'>Latest editor's draft:</dt>
       <dd><a href='{{edDraftURI}}'>{{edDraftURI}}</a></dd>
     {{/if}}
     {{#if testSuiteURI}}
-      <dt>Test suite:</dt>
+      <br/><dt class='loc-heading'>Test suite:</dt>
       <dd><a href='{{testSuiteURI}}'>{{testSuiteURI}}</a></dd>
     {{/if}}
     {{#if implementationReportURI}}
-      <dt>Implementation report:</dt>
+      <br/><dt class='loc-heading'>Implementation report:</dt>
       <dd><a href='{{implementationReportURI}}'>{{implementationReportURI}}</a></dd>
     {{/if}}
     {{#if showPreviousVersion}}
-      <dt>Previous version:</dt>
+      <br/><dt class='loc-heading'>Previous version:</dt>
       <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevVersion}}'>{{prevVersion}}</a></dd>
     {{/if}}
-    {{#if prevRecURI}}
-      {{#if isRec}}
-          <dt>Previous Recommendation:</dt>
-          <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevRecURI}}'>{{prevRecURI}}</a></dd>
-      {{else}}
-          <dt>Latest Recommendation:</dt>
-          <dd><a href='{{prevRecURI}}'>{{prevRecURI}}</a></dd>
-      {{/if}}
+    {{#if wg}}
+      <br/><dt class='loc-heading'>Technical Committee:</dt>
+      <dd><a href='{{wgURI}}'>{{wg}}</a></dd>
     {{/if}}
     {{#if chairs}}
-      <dt>Chair{{#if multipleChairs}}s{{/if}}:</dt>
+      <br/><dt class='loc-heading'>Chair{{#if multipleChairs}}s{{/if}}:</dt>
       {{showPeople "Chair" chairs}}
     {{/if}}
-    <dt>Editor{{#if multipleEditors}}s{{/if}}:</dt>
+    <br/><dt class='loc-heading'>Editor{{#if multipleEditors}}s{{/if}}:</dt>
     {{showPeople "Editor" editors}}
     {{#if authors}}
-      <dt>Author{{#if multipleAuthors}}s{{/if}}:</dt>
+      <br/><dt class='loc-heading'>Author{{#if multipleAuthors}}s{{/if}}:</dt>
       {{showPeople "Author" authors}}
     {{/if}}
     {{#if otherLinks}}
       {{#each otherLinks}}
         {{#if key}}
-          <dt {{#if class}}class="{{class}}"{{/if}}>{{key}}:</dt>
+          <br/><dt  class='loc-heading'>{{key}}:</dt>
           {{#if data}}
              {{#each data}}
                 {{#if value}}
@@ -87,6 +86,20 @@
         {{/if}}
       {{/each}}
     {{/if}}
+    {{#if namespaces}}
+     <br/><dt class='loc-heading'>Namespaces:</dt>
+     {{#each namespaces}}
+       {{#if uri}}
+          <dd><a href='{{uri}}'>{{uri}}</a></dd>
+       {{/if}}
+     {{/each}}
+    {{/if}}
+    <br><dt class='loc-heading'>Abstract:</dt>
+    <dd>{{{shortAbstract}}}</dd>
+    <br/><dt class='loc-heading'>Status:</dt>
+    <dd>{{{status}}}</dd>
+    <br/><dt class='loc-heading'>Citation format:</dt>
+    <dd>When referencing this specification the following citation format should be used: TBD</dd>
   </dl>
   {{#if errata}}
     <p>
@@ -109,5 +122,6 @@
       translations may also be available.
     </p>
   {{/if}}
-  <hr/>
+  
+  
 </div>

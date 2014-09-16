@@ -1,5 +1,4 @@
-<section id='sotd' class='introductory'><h2>Status</h2>
-  {{#if isUnofficial}}
+{{#if isUnofficial}}
     <p>
       This document is merely a public working draft of a potential committee specification. It has
       no official standing of any kind and does not represent the support or consensus of any
@@ -29,8 +28,8 @@
          {{/if}}
          {{#unless isPR}}
            If you wish to make comments regarding this document, please send them to 
-           <a href='https://www.oasis-open.org/committees/comments/index.php?wg_abbrev={{wgShortName}}'>{{wgPublicList}}@lists.open-oasis.org</a> 
-            (<a href='mailto:{{wgPublicList}}-subscribe@lists.open-oasis.org?subject=subscribe'>subscribe</a>, 
+           <a href='https://www.oasis-open.org/committees/comments/index.php?wg_abbrev={{wgShortName}}'>{{wgPublicList}}@lists.oasis-open.org</a> 
+            (<a href='mailto:{{wgPublicList}}-subscribe@lists.oasis-open.org?subject=subscribe'>subscribe</a>, 
              <a href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>){{#if subjectPrefix}}
              with <code>{{subjectPrefix}}</code> at the start of your email's subject{{/if}}.
          {{/unless}}
@@ -44,8 +43,8 @@
          {{#if isPR}}
              The OASIS Membership and other interested parties are invited to review the document and
              send comments to
-             <a rel='discussion' href='https://www.oasis-open.org/committees/comments/index.php?wg_abbrev={{wgShortName}}'>{{wgPublicList}}@lists.open-oasis.org</a> 
-             (<a href='mailto:{{wgPublicList}}-subscribe@lists.open-oasis.org?subject=subscribe'>subscribe</a>,
+             <a rel='discussion' href='https://www.oasis-open.org/committees/comments/index.php?wg_abbrev={{wgShortName}}'>{{wgPublicList}}@lists.oasis-open.org</a> 
+             (<a href='mailto:{{wgPublicList}}-subscribe@lists.oasis-open.org?subject=subscribe'>subscribe</a>,
              <a href='https://lists.oasis-open.org/archives/{{wgPublicList}}/'>archives</a>)
              through {{humanPREnd}}.
          {{else}}
@@ -73,8 +72,6 @@
            advance through the Technical Recommendation process.
          </p>
        {{/if}}
-       <p>
        {{#if addPatentNote}}<p>{{{addPatentNote}}}</p>{{/if}}
      {{/if}}
   {{/if}}
-</section>
