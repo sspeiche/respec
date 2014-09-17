@@ -4,27 +4,27 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix dcterms: <http://purl.org/dc/terms/>.
 
-<http://open-services.net/ns/xxx#> dcterms:description "\r\n\t\t\tAll vocabulary URIs defined in the OSLC Fake Template namespace.\r\n\t\t"^^rdf:XMLLiteral;
-	dcterms:title "The OSLC Template Vocabulary\r\n\t\t";
+<http://open-services.net/ns/xxx#> dcterms:description "All vocabulary URIs defined in the OSLC Fake Template namespace."^^rdf:XMLLiteral;
+	dcterms:title "The OSLC Template Vocabulary";
 	a owl:Ontology;
 	rdfs:label "OSLC Template";
-	rdfs:seeAlso <http://open-services.net/bin/view/Main/OslcCoreSpecification>,
+	rdfs:seeAlso <http://docs.oasis-open.org/tc-name/>,
 		<http://open-services.net/ns/xxx/xxx.ttl>.
 
 <http://open-services.net/ns/xxx#templateProperty> a rdf:Property;
-	rdfs:comment "value allowed for a property.";
+	rdfs:comment "Template sample property.";
 	rdfs:isDefinedBy <http://open-services.net/ns/xxx#>;
 	rdfs:label "templateProperty";
-	rdfs:seeAlso <http://open-services.net/bin/view/Main/OslcCoreSpecification>.
+	rdfs:seeAlso <http://docs.oasis-open.org/tc-name/>.
 
 <http://open-services.net/ns/xxx#TemplateClass> a rdfs:Class;
 	rdfs:comment "A fake template class.";
 	rdfs:isDefinedBy <http://open-services.net/ns/xxx#>;
-	rdfs:label "AllowedValues";
-	rdfs:seeAlso <http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA#Resource_Allowed_Values>.
+	rdfs:label "TemplateClass";
+	rdfs:seeAlso <http://docs.oasis-open.org/tc-name/>.
 
 <http://open-services.net/ns/xxx#TemplateIndividual>
     rdfs:comment "A fake template individual";
 	rdfs:isDefinedBy <http://open-services.net/ns/xxx#>;
-	rdfs:label "Any";
-	rdfs:seeAlso <http://open-services.net/bin/view/Main/OslcCoreSpecification>.
+	rdfs:label "TemplateIndividual";
+	rdfs:seeAlso <http://docs.oasis-open.org/tc-name/>.
