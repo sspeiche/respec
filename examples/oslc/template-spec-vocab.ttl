@@ -4,8 +4,9 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix dcterms: <http://purl.org/dc/terms/>.
 
-<http://open-services.net/ns/xxx#> dcterms:description "All vocabulary URIs defined in the OSLC Fake Template namespace."^^rdf:XMLLiteral;
-	dcterms:title "The OSLC Template Vocabulary";
+<http://open-services.net/ns/xxx#> 
+    dcterms:description "All vocabulary URIs defined in the OSLC Fake Template namespace."^^rdf:XMLLiteral;
+	rdfs:comment "The OSLC Template Vocabulary";
 	a owl:Ontology;
 	rdfs:label "OSLC Template";
 	rdfs:seeAlso <http://docs.oasis-open.org/tc-name/>,
@@ -23,7 +24,7 @@
 	rdfs:label "TemplateClass";
 	rdfs:seeAlso <http://docs.oasis-open.org/tc-name/>.
 
-<http://open-services.net/ns/xxx#TemplateIndividual>
+<http://open-services.net/ns/xxx#TemplateIndividual> a rdf:Description;
     rdfs:comment "A fake template individual";
 	rdfs:isDefinedBy <http://open-services.net/ns/xxx#>;
 	rdfs:label "TemplateIndividual";
