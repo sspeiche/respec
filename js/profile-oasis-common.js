@@ -10,7 +10,8 @@ var requireConfig = {
 };
 if ("respecVersion" in window && respecVersion) {
     requireConfig.paths = {
-        "ui":   "https://raw.github.com/darobin/respec/gh-pages/js/ui"
+        "ui":   "https://raw.github.com/darobin/respec/gh-pages/js/ui",
+        "n3": "n3-browser.min.js"
     };
 }
 require.config(requireConfig);
@@ -45,6 +46,7 @@ define([
         ,   "oasis/informative"
         ,   "core/id-headers"
         ,   "oasis/aria"
+        ,   "oasis/vocab"        
         ,   "core/shiv"
         ,   "core/remove-respec"
         ,   "core/location-hash"
@@ -58,3 +60,9 @@ define([
             });
         }
 );
+
+function vocabToTable(util, content) {
+	var vocab = require("oasis/vocab");
+	return vocab.vocabToTable(util, content);
+}
+

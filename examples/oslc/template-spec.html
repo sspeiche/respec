@@ -1,10 +1,10 @@
-f<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>OSLC &lt;name of spec&gt; 1.0</title>
 <meta charset='utf-8'>
- <script	src='http://sspeiche.github.io/respec/builds/oasis/respec-oasis-common.js' async class='remove'></script>  
-<!-- <script src='../../js/require.js' data-main='../../js/profile-oasis-common' async class='remove'></script>--> <!--  Use for local development of respec -->
+<!-- <script	src='http://sspeiche.github.io/respec/builds/oasis/respec-oasis-common.js' async class='remove'></script>  -->
+<script src='../../js/require.js' data-main='../../js/profile-oasis-common' async class='remove'></script> <!--  Use for local development of respec -->
 <script type="text/javascript" src='n3-browser.min.js'></script>
 <script  type="text/javascript" >
 	var respecConfig = {
@@ -92,13 +92,17 @@ f<!DOCTYPE html>
 		console.log('storage created');
 		console.dir(content);
 		html += "<ul>";
+		var triples = [];
 		parser.parse(content,
 			function (error, triple, prefixes) {
 			   triple && store.addTriple(triple);
-			   if (triple) html += "<li>"+triple.subject+", "+triple.predicate+", "+triple.object+"</li>";
-			   console.log(html);
+			   if (triple) 
+				   triples.push("<li>"+triple.subject+", "+triple.predicate+", "+triple.object+"</li>");
+			   // else
+				//   html += triples.join() + "</ul>";
+			   // console.log(html);
 			});
-		html += "</ul>";
+		html += triples.join() + "</ul>";
 		console.dir(html);
 		return html;
 	}
@@ -250,12 +254,13 @@ f<!DOCTYPE html>
 		<h2>RDF Vocabulary</h2>
 		<p><em>Each specification may define new vocabulary terms.  These should be defined with consideration for global use (not within a specific type
 		of resource).  Other domains and resource types will be encouraged to reuse these.</em></p>
-		<pre title='RDF Vocabulary for Template' class='example' data-include='./template-spec-vocab.ttl' 
-			data-include-format='text'></pre> <!-- data-oninclude='toVocabTable' -->
-			
+		
+<div title='RDF Vocabulary for Template' data-include='./template-spec-vocab.ttl' 
+			data-oninclude='vocabToTable' data-include-sync='true' data-include-replace='true' 
+			data-include-format='html'></div> <!-- data-oninclude='toVocabTable' -->			
 			
 <section>
-<h2 id="OSLC Template">Vocabulary Details</h2>
+<h2 id="OSLC Template">Vocabulary OLD Details</h2>
 <p>
 <verbatim>http://open-services.net/ns/xxx#</verbatim>
 <em>OSLC Template</em> is an RDF description.</p>

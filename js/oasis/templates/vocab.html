@@ -1,0 +1,74 @@
+<section>
+<h2>Vocabulary Details</h2>
+<p>
+<verbatim>{{vocabURI}}</verbatim>
+<em>OSLC Template</em> is an RDF description.</p>
+<p>All vocabulary URIs defined in the OSLC Fake Template namespace.</p>
+{{#if seeAlso}}<strong>See Also:</strong><ul>{{/if}}
+  {{#each seeAlso}}
+    {{#if object}}<li><a href="{{object}}">{{object}}</a></li>{{/if}}
+  {{/each}}
+{{#if seeAlso}}</ul>{{/if}}
+
+{{#if classes}}
+<section><h2>RDFS Classes in this namespace</h2>
+<p>{{#each classes}}<a href="#{{name}}">{{name}}</a>, {{/each}}</p>
+</section>
+{{/if}}
+
+{{#if props}}
+<section><h2>RDF Properties in this namespace</h2>
+<p>{{#each props}}<a href="#{{name}}">{{name}}</a>, {{/each}}</p>
+</section>
+{{/if}}
+
+{{#each classes}}
+<section>
+<h2 class="TML" id="{{name}}">{{name}}</h2>
+<p>
+<verbatim>{{subject}}</verbatim>
+<em>{{name}}</em> is an RDFS class.</p>
+<p>{{comment}}</p>
+{{#if seeAlso}}
+<strong>See Also:</strong>
+<ul>
+{{#each seeAlso}}<li><a href="{{object}}">{{object}}</a></li>{{/each}}
+</ul>
+{{/if}}
+</section>
+{{/each}}
+
+{{#each props}}
+<section>
+<h2 class="TML" id="{{name}}">{{name}}</h2>
+<p>
+<verbatim>{{subject}}</verbatim>
+<em>{{name}}</em> is an RDF property.</p>
+<p>{{comment}}</p>
+{{#if seeAlso}}
+<strong>See Also:</strong>
+<ul>
+{{#each seeAlso}}<li><a href="{{object}}">{{object}}</a></li>{{/each}}
+</ul>
+{{/if}}
+</section>
+{{/each}}
+
+
+{{#each desc}}
+<section>
+<h2 class="TML" id="{{name}}">{{name}}</h2>
+<p>
+<verbatim>{{subject}}</verbatim>
+<em>{{name}}</em> is an RDF description.</p>
+<p>{{comment}}</p>
+{{#if seeAlso}}
+<strong>See Also:</strong>
+<ul>
+{{#each seeAlso}}<li><a href="{{object}}">{{object}}</a></li>{{/each}}
+</ul>
+{{/if}}
+</section>
+{{/each}}
+
+</section>
