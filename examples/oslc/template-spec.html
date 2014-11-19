@@ -11,6 +11,9 @@
 		// specification status (WD, CSD, CSPRD, CS, COS, OS, Errata, CND, CNPRD, CN). If in doubt use WD.
 		// See http://docs.oasis-open.org/specGuidelines/ndr/namingDirectives.html#stage
 		specStatus : "WD",
+		
+        // Only include h1 and h2 level
+        maxTocLevel: 2,
 
 		// the specification's short name, as in http://oasis-open.org/
 		shortName : "oslc-xxx",
@@ -89,34 +92,46 @@
 		console.log('storage created');
 		console.dir(content);
 		html += "<ul>";
+		var triples = [];
 		parser.parse(content,
 			function (error, triple, prefixes) {
 			   triple && store.addTriple(triple);
-			   if (triple) html += "<li>"+triple.subject+", "+triple.predicate+", "+triple.object+"</li>";
-			   console.log(html);
+			   if (triple) 
+				   triples.push("<li>"+triple.subject+", "+triple.predicate+", "+triple.object+"</li>");
+			   // else
+				//   html += triples.join() + "</ul>";
+			   // console.log(html);
 			});
-		html += "</ul>";
+		html += triples.join() + "</ul>";
 		console.dir(html);
 		return html;
 	}
 
 </script>
+   <style type="text/css">
+		.normal { 
+			font-weight: normal;
+			color: black;
+			font: normal 100% sans-serif;
+		}
+	</style>
 </head>
 <body>
 
 	<section id='abstract'>This is the <em>abstract</em> for your specification, should be fairly
 			short...a couple of sentences.</section>
 			
-	<section id='sotd'>Custom status paragraph.</section>
+	<section id='sotd'><em>Custom status paragraph, updated to reflect current status.</em></section>
 	
 	<section id='toc'></section>	
 	<hr/>
 	
 	<section id='intro' class='informative'>
 		<h2>Introduction</h2>
-		<p>A simple introduction. It would be good if the reader ended the
+		<p><em>A simple introduction. It would be good if the reader ended the
 			introduction knowing what the spec does, even a simple key example
-			(even detailed copy-n-paste sample a developer would use)</p>
+			(even detailed copy-n-paste sample a developer would use). I decent example
+			is the <a href="https://dvcs.w3.org/hg/ldpwg/raw-file/ldpatch/ldpatch.html#introduction">LD Patch intro section</a>.</em></p>
 	</section>
 
 	<section id="terms">
@@ -133,6 +148,13 @@
 			</dd>
 		</dl>
 	</section>
+	
+	<section id="conformance">
+	<p><em>TODO: needed for public review version of standards-track specifications, more details 
+	in <a href="http://docs.oasis-open.org/templates/TCHandbook/ConformanceGuidelines.html#_Toc170119664">TC Handbook</a>.
+	Some examples: <a href="https://dvcs.w3.org/hg/ldpwg/raw-file/default/ldp.html#conformance">LDP</a>, 
+	<a href="http://docs.oasis-open.org/ubl/os-UBL-2.1/UBL-2.1.html#S-CONFORMANCE">UBL</a></em></p>
+	</section>
 
 	<section class='informative'>
 		<h2>Motivation</h2>
@@ -144,7 +166,7 @@
 	<section id='concepts' class='informative'>
 		<h2>Basic Concepts</h2>
 		<p><em>Optional section, though could be useful if intro can't cover it and you have enough concepts
-			that it is worth elaborating on.</em></p>
+			that it is worth elaborating on.  A reasonable example is the <a href="http://www.w3.org/TR/json-ld/#basic-concepts">JSON-LD Syntax spec</a>.</em></p>
 	</section>
 
 	<section>
@@ -152,6 +174,21 @@
 		<p><em>The title of this section is flexible.  Since the title of this spec should match what it does, it 
 		may not make sense to repeat it here.  This section is intended to capture the conformance clauses 
 		(ie, the 'meat' of the spec).</em></p>
+		
+		<section id="clause">
+			<h2>Clause section</h2>
+			<p><em>Give your section title/id something meaningful and simple, don't include the actual section number.</em></p>
+			<p><em><strong>Writing conformance clauses/statements: </strong> Create individual sections for each conformance clause.
+			Each clause should cleanly map to a test case, see [[LDP]] spec and <a href="http://w3c.github.io/ldp-testsuite">LDP testsuite</a> for an example of this model.</em></p>
+			
+			<section id="clausea"><h2 class="normal">
+				OSLC specifications MUST provide [[RFC2116]] keywords that SHOULD be in ALL CAPS and MAY include client and/or server needs.
+			</h2></section>
+
+			<section id="clauseb"><h2 class="normal">
+				It is RECOMMENDED that OSLC specifications include examples whenever possible.
+			</h2></section>
+		</section>
 		
 		<section>
 			<h2>Shape</h2>
@@ -217,12 +254,13 @@
 		<h2>RDF Vocabulary</h2>
 		<p><em>Each specification may define new vocabulary terms.  These should be defined with consideration for global use (not within a specific type
 		of resource).  Other domains and resource types will be encouraged to reuse these.</em></p>
-		<pre title='RDF Vocabulary for Template' class='example' data-include='./template-spec-vocab.ttl' 
-			data-include-format='text'></pre> <!-- data-oninclude='toVocabTable' -->
-			
+		
+<div title='RDF Vocabulary for Template' data-include='./template-spec-vocab.ttl' 
+			data-oninclude='vocabToTable' data-include-sync='true' data-include-replace='true' 
+			data-include-format='html'></div> <!-- data-oninclude='toVocabTable' -->			
 			
 <section>
-<h2 id="OSLC Template">Vocabulary Details</h2>
+<h2 id="OSLC Template">Vocabulary OLD Details</h2>
 <p>
 <verbatim>http://open-services.net/ns/xxx#</verbatim>
 <em>OSLC Template</em> is an RDF description.</p>
@@ -295,11 +333,28 @@
 		
 	</section>
 
-
 	<section class='appendix informative'>
 		<h2>Acknowledgements</h2>
 		<p><em>Call all key contributors, reviewers or general groups as needed.</em></p>
 		<p>Many thanks to Tim Berners-Lee for inventing the Web.</p>
 	</section>
+
+	<section class='appendix informative'>
+		<h2>Change History</h2>
+		<p>The change history is up to the editors to insert a brief summary of
+changes, ordered by most recent changes first and with heading from which
+public draft it has been changed from.</p>
+
+<!-- 
+	<section>	
+		<h2>Detailed history</h2>
+<!-- <blockquote><em><a href="http://sspeiche.github.io/respec/examples/oslc/template-spec.html">Working Draft</a></em></blockquote> -->
+<!-- 
+		<ul>
+			<li>2014-10-20 - Provide history, prefer autogen from SCM tool...conclude with initials (SS)</li>
+		</ul>
+	</section>-->
+	</section>
+
 </body>
 </html>
