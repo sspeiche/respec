@@ -10,11 +10,10 @@ define(
         return {
             run: function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/vocab");
-                
                 msg.pub("end", "oasis/vocab");
                 cb();
             },
-            vocabToTable: function(util, content) {
+            vocabToSpec: function(util, content) {
                 var fillHBJson = function(store, triples, map) {
     			    $.each(triples || [], function(i, it) {
     			    	$.each(map || [], function(n, nt) {

@@ -10,8 +10,7 @@ var requireConfig = {
 };
 if ("respecVersion" in window && respecVersion) {
     requireConfig.paths = {
-        "ui":   "https://raw.github.com/darobin/respec/gh-pages/js/ui",
-        "n3": "n3-browser.min.js"
+        "ui": "https://raw.github.com/darobin/respec/gh-pages/js/ui",
     };
 }
 require.config(requireConfig);
@@ -61,8 +60,9 @@ define([
         }
 );
 
-function vocabToTable(util, content) {
+function vocabToSpec(util, content) {
 	var vocab = require("oasis/vocab");
-	return vocab.vocabToTable(util, content);
+	return vocab.vocabToSpec(util, content);
 }
+
 
