@@ -174,10 +174,16 @@
 			consumed by other applications.  Shapes must be an external Turtle file
 			(.ttl) and included.  We hope to have some code that will convert it into an HTML table, or other 
 			visually pleasing forms as needed.</em></p>
-			<pre class='example' title='RDF Shape for Template' data-include='./template-spec-shape.ttl' data-include-format='text'></pre>
+		
+			<div title='RDF Shape for Template' 
+				data-include='./template-spec-shape.ttl' 
+				data-oninclude='shapeToSpec' 
+				data-include-sync='true' 
+				data-include-replace='true' 
+				data-include-format='html'></div>
 			
 			<ul>
-<li><strong>Name:</strong> <code>TemplateClass</code></li>
+<li><strong>Name:</strong> OLD <code>TemplateClass</code></li>
 <li><strong>Description:</strong> Shape for template resource.</li>
 <li><strong>Type URI</strong> <code>http://open-services.net/ns/xxx#TemplateClass</code></li>
 </ul>

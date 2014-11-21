@@ -46,6 +46,7 @@ define([
         ,   "core/id-headers"
         ,   "oasis/aria"
         ,   "oasis/vocab"        
+        ,   "oasis/shape"        
         ,   "core/shiv"
         ,   "core/remove-respec"
         ,   "core/location-hash"
@@ -63,6 +64,11 @@ define([
 function vocabToSpec(util, content) {
 	var vocab = require("oasis/vocab");
 	return vocab.vocabToSpec(util, content);
+}
+
+function shapeToSpec(util, content) {
+	var shape = require("oasis/shape");
+	return shape.shapeToSpec(util, content);
 }
 
 
