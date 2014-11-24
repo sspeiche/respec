@@ -10,7 +10,7 @@ var requireConfig = {
 };
 if ("respecVersion" in window && respecVersion) {
     requireConfig.paths = {
-        "ui":   "https://darobin.github.io/respec/js/ui"
+        "ui":   "https://w3c.github.io/respec/js/ui"
     };
 }
 require.config(requireConfig);
@@ -30,6 +30,7 @@ define([
         ,   "core/data-transform"
         ,   "core/data-include"
         ,   "core/inlines"
+        ,   "w3c/rfc2119"
         ,   "core/examples"
         ,   "core/issues-notes"
         ,   "core/requirements"
