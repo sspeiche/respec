@@ -1,0 +1,31 @@
+<ul>
+<li><strong>Name:</strong> <code>{{name}}</code></li>
+<li><strong>Description:</strong>{{title}}</li>
+<li><strong>Type URI</strong> <code>{{typeURI}}</code></li>
+</ul>
+
+<b>{{name}} Properties</b>
+
+<table class="simple">
+<thead>
+<tr>
+  <th><em>Prefixed Name</em></th>
+  <th><em>Occurs</em></th>
+  <th><em>Read-only</em></th>
+  <th><em>Value-type</em></th>
+  <th><em>Range</em></th>
+  <th><em>Description</em></th>
+</tr>
+</thead>
+<tbody>
+{{#each props}}
+<tr>
+  <td><code>{{prefixedName}}</code></td>
+  <td>{{occurs}}</td>
+  <td>{{readOnly}}</td>
+  <td>{{valType}}</td>
+  <td>{{range}}</td>
+  <td>{{description}}</td>
+</tr>
+{{/each}}
+</table>

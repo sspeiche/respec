@@ -5,3 +5,6 @@ scratch
 .htaccess
 examples/touchevents.html
 bevy.json
+.settings
+.project
+.idea

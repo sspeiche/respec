@@ -5,7 +5,7 @@
 <meta charset='utf-8'>
 <!-- <script	src='http://sspeiche.github.io/respec/builds/oasis/respec-oasis-common.js' async class='remove'></script>  -->
 <script src='../../js/require.js' data-main='../../js/profile-oasis-common' async class='remove'></script> <!--  Use for local development of respec -->
-<script type="text/javascript" src='n3-browser.min.js'></script>
+<script src="n3-browser.min.js" class="remove" type="text/javascript"></script>
 <script  type="text/javascript" >
 	var respecConfig = {
 		// specification status (WD, CSD, CSPRD, CS, COS, OS, Errata, CND, CNPRD, CN). If in doubt use WD.
@@ -84,29 +84,6 @@
 			}
 	    }
 	};
-
-	function toVocabTable(util, content) {
-		var parser = N3.Parser(), html = "";
-		console.log('parser created');
-		var store = N3.Store();
-		console.log('storage created');
-		console.dir(content);
-		html += "<ul>";
-		var triples = [];
-		parser.parse(content,
-			function (error, triple, prefixes) {
-			   triple && store.addTriple(triple);
-			   if (triple) 
-				   triples.push("<li>"+triple.subject+", "+triple.predicate+", "+triple.object+"</li>");
-			   // else
-				//   html += triples.join() + "</ul>";
-			   // console.log(html);
-			});
-		html += triples.join() + "</ul>";
-		console.dir(html);
-		return html;
-	}
-
 </script>
    <style type="text/css">
 		.normal { 
@@ -197,48 +174,14 @@
 			consumed by other applications.  Shapes must be an external Turtle file
 			(.ttl) and included.  We hope to have some code that will convert it into an HTML table, or other 
 			visually pleasing forms as needed.</em></p>
-			<pre class='example' title='RDF Shape for Template' data-include='./template-spec-shape.ttl' data-include-format='text'></pre>
+		
+			<div title='RDF Shape for Template' 
+				data-include='./template-spec-shape.ttl' 
+				data-oninclude='shapeToSpec' 
+				data-include-sync='true' 
+				data-include-replace='true' 
+				data-include-format='html'></div>
 			
-			<ul>
-<li><strong>Name:</strong> <code>TemplateClass</code></li>
-<li><strong>Description:</strong> Shape for template resource.</li>
-<li><strong>Type URI</strong> <code>http://open-services.net/ns/xxx#TemplateClass</code></li>
-</ul>
-
-<b>TemplateClass Properties</b>
-
-<table class="simple">
-<thead>
-<tr>
-  <th><em>Prefixed Name</em></th>
-  <th><em>Occurs</em></th>
-  <th><em>Read-only</em></th>
-  <th><em>Value-type</em></th>
-  <th><em>Representation</em></th>
-  <th><em>Range</em></th>
-  <th><em>Description</em></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td><code>dcterms:title</code></td>
-  <td>zero-or-many</td>
-  <td>unspecified</td>
-  <td>AnyResource</td>
-  <td>Either</td>
-  <td><code>any</code></td>
-  <td>Contributor or contributors to resource (reference: Dublin Core). It is likely that the target resource will be an <a href="http://open-services.net/bin/view/Main/OSLCCoreSpecAppendixA#foaf_Person_Resource"> <code>foaf:Person</code> </a> but that is not necessarily the case.</td>
-</tr>
-<tr>
-  <td><code>oslc-xxx:xxx-prop</code></td>
-  <td>zero-or-one</td>
-  <td>True</td>
-  <td>String</td>
-  <td>n/a</td>
-  <td>n/a</td>
-  <td>A magical, special property</td>
-</tr>
-</table>
 		</section>
 		
 		<section>
@@ -255,81 +198,12 @@
 		<p><em>Each specification may define new vocabulary terms.  These should be defined with consideration for global use (not within a specific type
 		of resource).  Other domains and resource types will be encouraged to reuse these.</em></p>
 		
-<div title='RDF Vocabulary for Template' data-include='./template-spec-vocab.ttl' 
-			data-oninclude='vocabToTable' data-include-sync='true' data-include-replace='true' 
-			data-include-format='html'></div> <!-- data-oninclude='toVocabTable' -->			
-			
-<section>
-<h2 id="OSLC Template">Vocabulary OLD Details</h2>
-<p>
-<verbatim>http://open-services.net/ns/xxx#</verbatim>
-<em>OSLC Template</em> is an RDF description.</p>
-<p xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:parseType="Literal">All vocabulary URIs defined in the OSLC Fake Template namespace.</p>
-<strong>See Also:</strong>
-<ul>
-<li>
-<a href="http://docs.oasis-open.org/oslc-core/">http://docs.oasis-open.org/oslc-core/</a>
-</li>
-<li>
-<a href="http://open-services.net/ns/xxx/xxx.ttl">http://open-services.net/ns/xxx/xxx.ttl</a>
-</li>
-</ul>
-
-<section><h2>RDFS Classes in this namespace</h2>
-<p>
-<a href="#TemplateClass">TemplateClass</a>
-</p>
-</section>
-
-<section><h2>RDF Properties in this namespace</h2>
-<p>
-<a href="#OSLC Template">OSLC Template</a>, <a href="#TemplateIndividual">TemplateIndividual</a>, <a href="#templateProperty">templateProperty</a>
-</p>
-</section>
-
-<section>
-<h2 class="TML" id="TemplateClass">TemplateClass</h2>
-<p>
-<verbatim>http://open-services.net/ns/xxx#TemplateClass</verbatim>
-<em>TemplateClass</em> is an RDFS class.</p>
-<p>A fake template class.</p>
-<strong>See Also:</strong>
-<ul>
-<li>
-<a href="http://docs.oasis-open.org/tc-name/">http://docs.oasis-open.org/tc-name/</a>
-</li>
-</ul>
-</section>
-
-<section>
-<h2 class="TML" id="TemplateIndividual">TemplateIndividual</h2>
-<p>
-<verbatim>http://open-services.net/ns/xxx#TemplateIndividual</verbatim>
-<em>TemplateIndividual</em> is an RDF description.</p>
-<p>A fake template individual</p>
-<strong>See Also:</strong>
-<ul>
-<li>
-<a href="http://docs.oasis-open.org/tc-name/">http://docs.oasis-open.org/tc-name/</a>
-</li>
-</ul>
-</section>
-
-<section>
-<h2 class="TML" id="templateProperty">templateProperty</h2>
-<p>
-<verbatim>http://open-services.net/ns/xxx#templateProperty</verbatim>
-<em>templateProperty</em> is an RDF description.</p>
-<p>Template sample property.</p>
-<strong>See Also:</strong>
-<ul>
-<li>
-<a href="http://docs.oasis-open.org/tc-name/">http://docs.oasis-open.org/tc-name/</a>
-</li>
-</ul>
-</section>
-</section>
-
+<div title='RDF Vocabulary for Template' 
+	data-include='./template-spec-vocab.ttl' 
+	data-oninclude='vocabToSpec' 
+	data-include-sync='true' 
+	data-include-replace='true' 
+	data-include-format='html'></div>		
 		
 	</section>
 
