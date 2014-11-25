@@ -30,11 +30,27 @@ define(
             			}
             		});
             		return prefixedName;
-            	}
+            	};
+            	
+            	var setDefaults = function(prop) {   			    
+    			    var propDefaults = {
+    			    	occurs:   {long: "http://open-services.net/ns/core#Zero-or-many", short: "Zero-or-many"},
+    			    	readOnly: {long: "unspecified", short: "unspecified" },
+    			    	valType:  {long: "http://www.w3.org/2001/XMLSchema#string", short: "string"},
+    			    	rep:      {long: "http://open-services.net/ns/core#Either", short: "Either"},
+    			    	range:    {long: "http://open-services.net/ns/core#Resource", short: "Resource"},
+    			    	description: {long: "", short: ""}
+    			    }
+    			    
+    			    $.each(propDefaults, function(attr, value) {
+    			    	prop[attr] = value.short;
+    			    });
+            	};
             	// For each triple, find the predicate mapping to JSON
             	// attribute to make handlebars template easier
                 var fillHBJson = function(store, triples, map) {
     			    $.each(triples || [], function(i, it) {
+    			    	setDefaults(it);
     			    	$.each(map || [], function(n, nt) {
     				    	var results = store.find(it.object, nt.predicate, null);
     				    	if (results.length > 0) {
@@ -106,6 +122,9 @@ define(
 			    
 			    var title = store.find(vocabSub, dcTitle, null);
 			    conf.title = N3.Util.getLiteralValue(title[0].object);
+			    
+			    var desc = store.find(vocabSub, dcDescription, null);
+			    if (desc.length > 0 ) conf.description = N3.Util.getLiteralValue(desc[0].object);
 
 			    var props = store.find(vocabSub, oslcProp, null);
 			    conf.props = props;
@@ -128,15 +147,6 @@ define(
 					             "http://open-services.net/ns/core#Zero-or-many",
 					             "http://open-services.net/ns/core#One-or-many"],
 			    };
-			    
-			    var propDefaults = {
-			    	occurs: "http://open-services.net/ns/core#Zero-or-many",
-			    	readOnly: false,
-			    	valType: "http://www.w3.org/2001/XMLSchema#string",
-			    	rep: "http://open-services.net/ns/core#Either",
-			    	range: "http://open-services.net/ns/core#Resource",
-			    	description: ""
-			    }
 			    
 			    var inputMap = [{predicate: oslcOccurs, name: "occurs"}, 
 			                    {predicate: oslcReadonly, name: "readOnly"},

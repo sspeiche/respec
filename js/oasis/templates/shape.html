@@ -1,7 +1,8 @@
 <ul>
 <li><strong>Name:</strong> <code>{{name}}</code></li>
-<li><strong>Description:</strong>{{title}}</li>
-<li><strong>Type URI</strong> <code>{{typeURI}}</code></li>
+<li><strong>URI: </strong> <code>{{typeURI}}</code></li>
+<li><strong>Summary:</strong> {{{title}}}</li>
+{{#if description}}<li><strong>Description:</strong> {{{description}}}</li>{{/if}}
 </ul>
 
 <b>{{name}} Properties</b>
@@ -25,7 +26,7 @@
   <td>{{readOnly}}</td>
   <td>{{valType}}</td>
   <td>{{range}}</td>
-  <td>{{description}}</td>
+  <td>{{{description}}}</td>
 </tr>
 {{/each}}
 </table>

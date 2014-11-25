@@ -4,6 +4,7 @@
 
 <> a oslc:ResourceShape ;
 	dcterms:title "Shape for template resource" ;
+	dcterms:description "A little more detail about this shape, <em>HTML embedded</em> is ok." ;
 	oslc:name "TemplateClass" ;
 	oslc:describes xxx:TemplateClass ;
 	oslc:property <#dcterms-title>, xxx:templateProperty, xxx:gender, xxx:owner .
@@ -33,6 +34,6 @@
 	oslc:name "owner";
 	oslc:propertyDefinition dcterms:Person;
 	oslc:occurs oslc:Zero-or-one;
-	dcterms:description "The owners of this";
+	dcterms:description "The owners of <strong>this</string>";
 	oslc:valueType oslc:Resource ;
 	oslc:range oslc:personShape.
