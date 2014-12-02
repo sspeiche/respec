@@ -25,6 +25,9 @@ function build (options, cb) {
     ,   shim:   {
             "shortcut": {
                 exports:    "shortcut"
+            },
+            "n3-browser.min" : {
+                exports: "N3"
             }
         }
     ,   name:       "profile-oasis-common"
