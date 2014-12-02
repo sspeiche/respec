@@ -5,6 +5,9 @@ var requireConfig = {
     shim:   {
         "shortcut": {
             exports:    "shortcut"
+        },
+        "n3-browser.min": {
+        	exports: "N3"
         }
     }
 };
@@ -13,6 +16,7 @@ if ("respecVersion" in window && respecVersion) {
         "ui": "https://raw.github.com/darobin/respec/gh-pages/js/ui",
     };
 }
+
 require.config(requireConfig);
 
 define([

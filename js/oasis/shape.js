@@ -5,8 +5,9 @@
 define(
     ["handlebars",
      "core/utils",
+     "n3-browser.min",
      "tmpl!oasis/templates/shape.html"],
-    function (hb, utils, shapeTmpl) {
+    function (hb, utils, N3, shapeTmpl) {
         return {
             run: function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/shape");

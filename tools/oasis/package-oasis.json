@@ -21,5 +21,6 @@
     ,   "requirejs":    "2.1.8"
     ,   "prompt":       "0.2.12"
     ,   "async":        "0.2.9"
+    ,	"n3-browser.min": "*" 
     }
 }

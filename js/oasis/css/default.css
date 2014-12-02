@@ -1,10 +1,11 @@
-.normal { 
+.normal {
 	font-weight: normal;
 	color: black;
 	font: normal 100% sans-serif;
 }
-div.issue-open {
-   	border-color: #E05252;
+
+.issue-open {
+	border-color: #E05252;
 	background: #FBE9E9;
 	padding: 0.5em;
 	margin: 1em 0;
@@ -12,9 +13,10 @@ div.issue-open {
 	clear: both;
 	border-left-width: .5em;
 	border-left-style: solid;
-  	}
-  	div.issue-pending {
-   	border-color: #FAF602;
+}
+
+.issue-pending {
+	border-color: #FAF602;
 	background: #F7F6BC;
 	padding: 0.5em;
 	margin: 1em 0;
@@ -22,9 +24,10 @@ div.issue-open {
 	clear: both;
 	border-left-width: .5em;
 	border-left-style: solid;
-  	}
-  	div.issue-closed {
-   	border-color: #009900;
+}
+
+.issue-closed {
+	border-color: #009900;
 	background: #BCF7CF;
 	padding: 0.5em;
 	margin: 1em 0;
@@ -32,25 +35,28 @@ div.issue-open {
 	clear: both;
 	border-left-width: .5em;
 	border-left-style: solid;
-  	}
-  	div.issue-title {
-  	    padding-right: 1em;
-          min-width: 7.5em;
-          font-weight: bold;
-  	}
+}
+
+.issue-title {
+	padding-right: 1em;
+	min-width: 7.5em;
+	font-weight: bold;
+}
+
 .atrisk {
-	padding:    1em;
+	padding: 1em;
 	margin: 1em 0em 0em;
 	border: 1px solid #f00;
 	background: #ffc;
 }
+
 .atrisktext {
 	/* content:    "Feature At Risk"; */
-	display:    block;
-	width:  150px;
+	display: block;
+	width: 150px;
 	margin: -1.5em 0 0.5em 0;
-	font-weight:    bold;
+	font-weight: bold;
 	border: 1px solid #f00;
 	background: #fff;
-	padding:    3px 1em;
+	padding: 3px 1em;
 }

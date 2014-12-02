@@ -5,8 +5,9 @@
 define(
     ["handlebars",
      "core/utils",
+     "n3-browser.min",
      "tmpl!oasis/templates/vocab.html"],
-    function (hb, utils, vocabTmpl) {
+    function (hb, utils, N3, vocabTmpl) {
         return {
             run: function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/vocab");
