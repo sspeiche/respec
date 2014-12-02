@@ -65,14 +65,14 @@ define([
         }
 );
 
-function vocabToSpec(util, content) {
+function vocabToSpec(util, content, uri) {
 	var vocab = require("oasis/vocab");
-	return vocab.vocabToSpec(util, content);
+	return vocab.vocabToSpec(util, content, uri);
 }
 
-function shapeToSpec(util, content) {
+function shapeToSpec(util, content, uri) {
 	var shape = require("oasis/shape");
-	return shape.shapeToSpec(util, content);
+	return shape.shapeToSpec(util, content, uri);
 }
 
 
