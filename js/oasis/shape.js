@@ -14,18 +14,19 @@ define(
                 msg.pub("end", "oasis/shape");
                 cb();
             },
-            shapeToSpec: function(util, content) {
+            shapeToSpec: function(util, content, uri) {
             	var prefixMap;
             	
             	var quote = function(str) {
             		return (str+'').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
             	};
             	
-            	var addNSPrefix = function(name, URI) {
+            	/* See if name begins with namespace, if so replace with prefix from prefixMap */
+            	var addNSPrefix = function(name, namespace) {
             		var prefixedName = null;
             		$.each(prefixMap || [], function(i, it) {
             			var pattern = new RegExp("^"+it);
-            			if (pattern.test(URI)) {
+            			if (pattern.test(namespace)) {
             				prefixedName = i + ":" + name;
             				return prefixedName
             			}
@@ -73,19 +74,6 @@ define(
     			    });           	
                 };
                 
-            	var parser = N3.Parser();
-            	var store = N3.Store();
-            	parser.parse(function (error, triple, prefixes) {
-					if (error) {
-						console.log("Error: "+error);
-					} else {
-						if (triple) store.addTriple(triple);
-						else prefixMap = prefixes;
-					}
-            	});
-            	parser.addChunk(content);
-            	parser.end();
-			    
 			    var owlOnto = "http://www.w3.org/2002/07/owl#Ontology";
 			    var rdfsClass = "http://www.w3.org/2000/01/rdf-schema#Class";
 			    var rdfProp = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
@@ -111,9 +99,44 @@ define(
 			    var oslcRange = oslcNS + "range";
 			    var oslcName = oslcNS + "name";
 			    
-			    var shape = store.find(null, rdfType, oslcShape);
-			    if (shape.length != 1) { console.log("Can't locate oslc:ResourceShape"); return null;}
-			    var shapeSubject = shape[0].subject;
+			    var baseURI = uri;
+			    if (uri) {
+			    	/* Resolve uri */
+			    	var a = document.createElement("a");
+			    	a.href = uri;
+			    	uri = a.href;
+			    	baseURI = uri.split('#')[0]
+			    }
+			    
+            	var parser = N3.Parser({ documentURI: baseURI });
+            	var store = N3.Store();
+            	
+            	parser.parse(function (error, triple, prefixes) {
+					if (error) {
+						console.log("Error: "+error);
+					} else {
+						if (triple) store.addTriple(triple);
+						else prefixMap = prefixes;
+					}
+            	});
+            	parser.addChunk(content);
+            	parser.end();
+			    
+
+			    /* First look for a specific shape */
+			    var shape = store.find(uri, rdfType, oslcShape);
+			    var shapeSubject=null;
+			    
+			    if (shape.length == 1) { 
+			    	shapeSubject = shape[0].subject;
+			    }
+			    
+			    if (!shapeSubject) {
+			    	shape = store.find(null, rdfType, oslcShape);
+			    	if (shape.length < 1) { console.log("Can't locate oslc:ResourceShape"); return null;}
+			    	else if (shape.length > 1) { console.log("Foound multiple shape definitions, using: " + shape[0].subject); }
+			    	var shapeSubject = shape[0].subject;
+			    }
 			    var conf = {};
 			    conf.subject = shapeSubject;
 			    

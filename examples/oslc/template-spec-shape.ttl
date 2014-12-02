@@ -3,13 +3,22 @@
 @prefix xxx: <http://open-services.net/ns/xxx#> .
 
 # TODO: What stable URL should we have for shapes?
-<http://sspeiche.github.io/respec/examples/oslc/template-spec-shape.ttl>
+<>
     a oslc:ResourceShape ;
 	dcterms:title "Shape for template resource" ;
 #	dcterms:description "A little more detail about this shape, <em>HTML embedded</em> is ok." ;
 	oslc:name "TemplateClass" ;
 	oslc:describes xxx:TemplateClass ;
 	oslc:property <#dcterms-title>, xxx:templateProperty, xxx:gender, xxx:owner .
+
+# This example shows if you have more than 1 shape but share a bunch of the same properties, 
+# sometimes handy to have them in one file.  Just list the URI in the HTML including the #fragment
+<#Shape2>
+    a oslc:ResourceShape ;
+	dcterms:title "Shape2 for template resource" ;
+	oslc:name "Template2Class" ;
+	oslc:describes xxx:Template2Class ;
+	oslc:property xxx:gender, xxx:owner .
 
 <#dcterms-title> a oslc:Property ;
 	oslc:name "title" ;
