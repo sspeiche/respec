@@ -5,8 +5,9 @@
 define(
     ["handlebars",
      "core/utils",
+     "n3-browser.min",
      "tmpl!oasis/templates/shape.html"],
-    function (hb, utils, shapeTmpl) {
+    function (hb, utils, N3, shapeTmpl) {
         return {
             run: function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/shape");
@@ -112,21 +113,21 @@ define(
 			    
 			    var shape = store.find(null, rdfType, oslcShape);
 			    if (shape.length != 1) { console.log("Can't locate oslc:ResourceShape"); return null;}
-			    var vocabSub = shape[0].subject;
+			    var shapeSubject = shape[0].subject;
 			    var conf = {};
-			    conf.subject = vocabSub;
+			    conf.subject = shapeSubject;
 			    
-			    var typeURI = store.find(vocabSub, oslcDescribes, null);
+			    var typeURI = store.find(shapeSubject, oslcDescribes, null);
 			    conf.typeURI = typeURI[0].object;
 			    conf.name = /#.*$/.exec(conf.typeURI)[0].substring(1);
 			    
-			    var title = store.find(vocabSub, dcTitle, null);
+			    var title = store.find(shapeSubject, dcTitle, null);
 			    conf.title = N3.Util.getLiteralValue(title[0].object);
 			    
-			    var desc = store.find(vocabSub, dcDescription, null);
-			    if (desc.length > 0 ) conf.description = N3.Util.getLiteralValue(desc[0].object);
+			    var desc = store.find(shapeSubject, dcDescription, null);
+			    if (desc.length > 0) conf.description = N3.Util.getLiteralValue(desc[0].object);
 
-			    var props = store.find(vocabSub, oslcProp, null);
+			    var props = store.find(shapeSubject, oslcProp, null);
 			    conf.props = props;
 			    
 			    var validValues = {
