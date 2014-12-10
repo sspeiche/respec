@@ -40,7 +40,7 @@ define(
     			    	readOnly: {long: "unspecified", short: "unspecified" },
     			    	valType:  {long: "http://www.w3.org/2001/XMLSchema#string", short: "string"},
     			    	rep:      {long: "http://open-services.net/ns/core#Either", short: "Either"},
-    			    	range:    {long: "http://open-services.net/ns/core#Resource", short: "Resource"},
+    			    	range:    {long: "N/A", short: "N/A"},
     			    	description: {long: "", short: ""}
     			    }
     			    
