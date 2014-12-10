@@ -66,6 +66,15 @@ define(
 			    
 			    var seeAlso = store.find(vocabSub, rdfsSeeAlso, null);
 			    conf.seeAlso = seeAlso;
+			    
+			    var label = store.find(vocabSub, rdfsLabel, null);
+			    if (label.length == 1) {
+	    			conf.label = N3.Util.getLiteralValue(label[0].object);
+			    }
+			    var desc = store.find(vocabSub, dcDescription, null);
+			    if (desc.length == 1) {
+	    			conf.description = N3.Util.getLiteralValue(desc[0].object);
+			    }
 		
 			    var classes = store.find(null, rdfType, rdfsClass);
 			    conf.classes = classes;
