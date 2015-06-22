@@ -1,6 +1,6 @@
 {
     "name": "respec",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Specification Edition Support Tool (OASIS Profile).",
     "main": "index.js",
     "directories": {
@@ -21,6 +21,6 @@
     ,   "requirejs":    "2.1.8"
     ,   "prompt":       "0.2.12"
     ,   "async":        "0.2.9"
-    ,	"n3-browser.min": "*" 
+    ,    "n3-browser.min": "*"
     }
 }
