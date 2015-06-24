@@ -151,7 +151,7 @@ define(
 			    if (desc.length > 0) conf.description = N3.Util.getLiteralValue(desc[0].object);
 
 			    var props = store.find(shapeSubject, oslcProp, null);
-			    conf.props = props;
+ 			    conf.props = props;
 			    
 			    var validValues = {
 			    	oslcValType: [
@@ -191,6 +191,7 @@ define(
 			    	if (it.name && !it.prefixedName) 
 			    		it.prefixedName = addNSPrefix(it.name, it.propURI);
 			    });
+                props.sort(function(a, b) { return a.prefixedName.localeCompare(b.prefixedName); });
 			    
 			    
 			    var html = shapeTmpl(conf);
