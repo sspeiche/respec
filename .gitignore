@@ -8,4 +8,4 @@ bevy.json
 .settings
 .project
 .idea
-/.README.md.html
+*.md.html
