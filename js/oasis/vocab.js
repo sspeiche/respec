@@ -21,7 +21,7 @@ define(
     				    	var results = store.find(it.subject, nt.predicate, null);
     				    	if (results.length > 0) {
     				    		if (nt.multiValue) {
-    				    			it[nt.name] = results;    				    			
+    				    			it[nt.name] = results;
     				    		} else {
     				    			var o = results[0].object;
     				    			if (N3.Util.isLiteral(o)) {
@@ -31,7 +31,7 @@ define(
     				    		}
     				    	}
     			    	});
-    			    });           	
+    			    });
                 };
             	var parser = N3.Parser();
             	var store = N3.Store();
@@ -46,7 +46,7 @@ define(
             	parser.end();
 
 //			    alert("Somehow I made it!");
-			    
+
 			    var owlOnto = "http://www.w3.org/2002/07/owl#Ontology";
 			    var rdfsClass = "http://www.w3.org/2000/01/rdf-schema#Class";
 			    var rdfProp = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
@@ -57,16 +57,16 @@ define(
 			    var rdfsSeeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
 			    var rdfsIsDefinedBy = "http://www.w3.org/2000/01/rdf-schema#isDefinedBy";
 			    var dcDescription = "http://purl.org/dc/terms/description";
-			    
+
 			    var onto = store.find(null, rdfType, owlOnto);
 			    if (onto.length != 1) { console.log("Can't locate owl:Ontology"); return null;}
 			    var vocabSub = onto[0].subject;
 			    var conf = {};
 			    conf.vocabURI = vocabSub;
-			    
+
 			    var seeAlso = store.find(vocabSub, rdfsSeeAlso, null);
 			    conf.seeAlso = seeAlso;
-			    
+
 			    var label = store.find(vocabSub, rdfsLabel, null);
 			    if (label.length == 1) {
 	    			conf.label = N3.Util.getLiteralValue(label[0].object);
@@ -75,27 +75,30 @@ define(
 			    if (desc.length == 1) {
 	    			conf.description = N3.Util.getLiteralValue(desc[0].object);
 			    }
-		
+
 			    var classes = store.find(null, rdfType, rdfsClass);
 			    conf.classes = classes;
-			    
-			    var inputMap = [{predicate: rdfsLabel, name: "name"}, 
+
+			    var inputMap = [{predicate: rdfsLabel, name: "name"},
 			                    {predicate: rdfsComment, name: "comment"},
 			                    {predicate: rdfsSeeAlso, name: "seeAlso", multiValue: true},
 			                    {predicate: rdfsIsDefinedBy, name: "isDefinedBy"}];
 			    fillHBJson(store, classes, inputMap);
-			    
+                classes.sort(function(a, b) { return a.name.localeCompare(b.name); });
+
 			    var props = store.find(null, rdfType, rdfProp);
 			    conf.props = props;
 			    fillHBJson(store, props, inputMap);
-			    
+                props.sort(function(a, b) { return a.name.localeCompare(b.name); });
+
 			    var desc = store.find(null, rdfType, rdfDesc);
 			    conf.desc = desc;
 			    fillHBJson(store, desc, inputMap);
-			    
+                desc.sort(function(a, b) { return a.name.localeCompare(b.name); });
+
 			    //var template = hb.compile(vocabTmpl);
 			    var html = vocabTmpl(conf);
-		
+
 				return html;
             }
         };
