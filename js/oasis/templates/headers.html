@@ -98,8 +98,16 @@
     <dd>{{{shortAbstract}}}</dd>
     <br/><dt class='loc-heading'>Status:</dt>
     <dd>{{{status}}}</dd>
-    <br/><dt class='loc-heading'>Citation format:</dt>
-    <dd>When referencing this specification the following citation format should be used: TBD</dd>
+    {{#if citationLabel}}<br/><dt class='loc-heading'>Citation format:</dt>
+    <dd>When referencing this specification the following citation format should be used:
+    <br>[{{citationLabel}}]
+    <span class='citationTitle'>{{title}}</span>.
+    Edited by {{editorsHTML}}.
+    {{publishHumanDate}}.
+    {{textStatus}} {{revision}}.
+    <a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a>.
+    {{#if latestVersion}}Latest version: <a href='{{latestVersion}}'>{{latestVersion}}</a>.{{/if}}
+    </dd>{{/if}}
   </dl>
   {{#if errata}}
     <p>
@@ -122,6 +130,6 @@
       translations may also be available.
     </p>
   {{/if}}
-  
-  
+
+
 </div>
