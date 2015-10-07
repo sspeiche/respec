@@ -60,3 +60,7 @@
 	background: #fff;
 	padding: 3px 1em;
 }
+
+.citationTitle {
+    font-style: italic;
+}
