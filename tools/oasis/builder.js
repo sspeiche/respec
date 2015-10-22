@@ -27,7 +27,7 @@ function build (options, cb) {
                 exports:    "shortcut"
             },
             "n3-browser.min" : {
-                exports: "N3"
+            	exports: "N3"
             }
         }
     ,   name:       "profile-oasis-common"
