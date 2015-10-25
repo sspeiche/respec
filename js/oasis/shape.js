@@ -51,29 +51,34 @@ define(
             	// For each triple, find the predicate mapping to JSON
             	// attribute to make handlebars template easier
                 var fillHBJson = function(store, triples, map) {
-    			    $.each(triples || [], function(i, it) {
-    			    	setDefaults(it);
-    			    	$.each(map || [], function(n, nt) {
-    				    	var results = store.find(it.object, nt.predicate, null);
-    				    	if (results.length > 0) {
-    				    		if (nt.multiValue) {
-    				    			it[nt.name] = results;    				    			
-    				    		} else {
-    				    			var o = results[0].object;
-    				    			if (N3.Util.isLiteral(o)) {
-    				    				o = N3.Util.getLiteralValue(o);
-    				    			}
-    				    			if (!nt.dontCompact) {
-    				    				var r = /#.*$/.exec(o);
-    				    				if (r && r.length > 0) o = r[0].substring(1);
-    				    			}
-    				    			it[nt.name] = o;
-    				    		}
-    				    	}
-    			    	});
-    			    });           	
+		    // extract value data and read as literal value if it is
+		    function extractHBJson (found,nt) {
+    			var o = found[0].object;
+    			if (N3.Util.isLiteral(o)) {
+    			    o = N3.Util.getLiteralValue(o);
+    			}
+    			if (!nt.dontCompact) {
+    			    var r = /#.*$/.exec(o);
+    			    if (r && r.length > 0) o = r[0].substring(1);
+    			}
+			return o
+		    }
+
+    		    $.each(triples || [], function(i, it) {
+    			setDefaults(it);
+    			$.each(map || [], function(n, nt) {
+    			    var results = store.find(it.object, nt.predicate, null);
+    			    if (results.length > 0) {
+				// apply extract function for each of its elements
+    				if (nt.multiValue) {
+    				    it[nt.name] = results.map(extractHBJson(results, nt))
+    				} else {
+    				    it[nt.name] = extractHBJson(results, nt)
+    				}
+    			    }
+    			});
+    		    });           	
                 };
-                
 			    var owlOnto = "http://www.w3.org/2002/07/owl#Ontology";
 			    var rdfsClass = "http://www.w3.org/2000/01/rdf-schema#Class";
 			    var rdfProp = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
@@ -176,7 +181,7 @@ define(
 			                    {predicate: oslcReadonly, name: "readOnly"},
 			                    {predicate: oslcValType, name: "valType"},
 			                    {predicate: oslcRep, name: "rep"},
-			                    {predicate: oslcRange, name: "range"},
+			                    {predicate: oslcRange, name: "range", multiValue: true},
 			                    {predicate: oslcPropDefn, name: "propURI", dontCompact: true},
 			                    {predicate: dcDescription, name: "description"},
 			                    {predicate: oslcName, name: "name"}];
