@@ -36,9 +36,11 @@ function build (options, cb) {
     ,   inlineText: true
     ,   preserveLicenseComments:    false
     };
+    console.log("Starting build ...");
     r.optimize(config, function () {
         // add header
         try {
+            console.log("Completing build ...");
             fs.writeFileSync(config.out
                         ,   "/* ReSpec " + version +
                             " - Robin Berjon, http://berjon.com/ (@robinberjon) \n" +
