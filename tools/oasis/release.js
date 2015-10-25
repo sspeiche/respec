@@ -123,8 +123,8 @@ function tag (cb) {
     prompt.get(
         {
             description:    "Enter a message for tag "+targetVersion
-        ,   pattern:        /^.*$/
-        ,   message:        ""
+        ,   pattern:        /^.+$/
+        ,   message:        "?"
         ,   default:        "Tagging release "+targetVersion
         }
     ,   function (err, res) {
@@ -134,7 +134,7 @@ function tag (cb) {
         }
     );
     console.log("Tagging "+targetVersion+" with message "+tagMsg);
-    exec("git tag -m \""+tagMsg+"\" v" + targetVersion, cb);
+    exec("git tag -f -m \""+tagMsg+"\" v" + targetVersion, cb);
 }
 
 // 8. Push everything back to the server (make sure you are pushing at least the `feature/oasis-style` and
