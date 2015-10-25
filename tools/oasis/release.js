@@ -63,10 +63,10 @@ function bumpVersion (cb) {
     );
 }
 
-// 3. Run the build script (node tools/build-w3c-common.js). This should respond "OK!" (if not, fix the
+// 3. Run the build script (node tools/build-oasis-common.js). This should respond "OK!" (if not, fix the
 //    issue).
-// 4. Add the new build (git add builds/respec-w3c-common-3.x.y.js).
-// 5. Commit your changes (git commit -am v3.x.y)
+// 4. Add the new build (git add builds/respec-oasis-common-3.x.y.js).
+// 5. Commit your changes (git commit -am v0.0.9)
 // 6. Merge to gh-pages (git checkout gh-pages; git merge feature/oasis-style)
 // 7. Tag the release (git tag v3.x.y) and be sure that git is pushing tags.
 function buildAddCommitMergeTag (cb) {
