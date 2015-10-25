@@ -146,7 +146,7 @@ async.series([
         upToDateAndDev
     ,   bumpVersion
     ,   buildAddCommitMergeTag
-    ,   build
+//    ,   build
     ,   add
     ,   commit
     ,   checkoutGHPages
