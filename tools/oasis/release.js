@@ -52,7 +52,7 @@ function bumpVersion (cb) {
     ,   function (err, res) {
             targetVersion = res.question;
             if (err) return cb(err);
-            if (targetVersion == "n") {
+            if (targetVersion === "n") {
                targetVersion = version;
             } else {
                pack = pack.replace(/("version"\s*:\s*")[\d\.]+(")/, "$1" + targetVersion + "$2");
@@ -123,18 +123,17 @@ function tag (cb) {
     prompt.get(
         {
             description:    "Enter a message for tag "+targetVersion
-        ,   pattern:        /^.+$/
-        ,   message:        "?"
-        ,   default:        "Tagging release "+targetVersion
+        ,   type:           "string"
+        ,   required:       true
+        ,   default:        tagMsg
         }
     ,   function (err, res) {
+            var val = res.question.toLowerCase();
             if (err) return cb(err);
-            tagMsg = res.question;
-            cb();
+            console.log("Tagging "+targetVersion+" with message "+tagMsg);
+            exec("git tag -f -m \""+tagMsg+"\" v" + targetVersion, cb);
         }
     );
-    console.log("Tagging "+targetVersion+" with message "+tagMsg);
-    exec("git tag -f -m \""+tagMsg+"\" v" + targetVersion, cb);
 }
 
 // 8. Push everything back to the server (make sure you are pushing at least the `feature/oasis-style` and
