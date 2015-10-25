@@ -4,26 +4,26 @@ ReSpec
 
 ReSpec is a JS library that makes it easier to write technical specifications, or documents
 that tend to be technical in nature in general. It was originally designed for the purpose
-of writing W3C specifications, but has since grown to be able to support other outputs as 
+of writing W3C specifications, but has since grown to be able to support other outputs as
 well such as OASIS.
 
 Important Note
 ==============
 
-ReSpec is not endorsed by W3C and nobody should expect the W3C Webmaster to provide advice on 
+ReSpec is not endorsed by W3C and nobody should expect the W3C Webmaster to provide advice on
 problems encountered with ReSpec, or on why it may be failing to produce pubrules-compliant
 content.
 
 Want to change a bibliographical reference?
 ===========================================
 
-Bibliographical references have been moved out of ReSpec. You want to use this: 
+Bibliographical references have been moved out of ReSpec. You want to use this:
 https://github.com/tobie/specref
 
 Want to see complete documentation?
 ===================================
 
-Thorough documentation for ReSpec can be found at http://www.w3.org/respec, with a github repository 
+Thorough documentation for ReSpec can be found at http://www.w3.org/respec, with a github repository
 for the sources at https://github.com/w3c/respec-docs
 
 What is this version of ReSpec?
@@ -40,12 +40,12 @@ finished, and in the meantime v1 has continued to be patched for bugs. This lead
 which v2 is not a proper superset of v1, and patches to the latter have to be rewritten completely
 to also apply to v2. Obviously, that's not a desirable situation.
 
-The version in this repository here is ���ReSpec: Evolution���. What I've done is essentially that I've
+The version in this repository here is "ReSpec: Evolution". What I've done is essentially that I've
 imported the v1 source here. I am very quickly going to make a few very small changes to it so as to
 make it 100% compatible with the existing v1 but to start making use of the flexible loading
 facility included in v2. Then I will cease all development on the other two versions, making this
 the only canonical option. Since it will start off v1 it will be guaranteed compatible, but it will
-progressively be rewritten over time to attain v2's features ��� without the synchronisation problems.
+progressively be rewritten over time to attain v2's features - without the synchronisation problems.
 
 How to contribute?
 ==================
@@ -64,10 +64,10 @@ If you're not familiar with GitHub, you need to follow the following steps:
 * Get a GitHub account. This is done quickly, and the GH people will not bother you at all. Plus,
   it's pretty much a requirement for the majority of OSS communities these days.
 * If all you want to make is a small, simple change, you can use the Web interface. Navigate to the
-  file that you want to change, click ���Edit this file��� in the toolbar, then save your changes ��� they
+  file that you want to change, click "Edit this file" in the toolbar, then save your changes - they
   will get sent to the project for approval (which ought to be quick).
-* If you wish to make more complex changes, you will need to fork the project (click ���Fork���), clone
-  the resulting repository, make the changes there, and push it back. Then click the ���Pull Request���
+* If you wish to make more complex changes, you will need to fork the project (click "Fork"), clone
+  the resulting repository, make the changes there, and push it back. Then click the "Pull Request"
   button. This allows you to request that the project integrate your changes. Those should normally
   get processed relatively fast (depending on how complex they are).
 
@@ -146,7 +146,7 @@ published the latest and greatest version.
 
 #### OASIS Profile
 
-Normally, only @sspeiche makes releases. But in the eventuality that he wouldn't be available, others
+Normally, only @sspeiche makes releases. But in the eventuality that he is not available, others
 can follow this process:
 
 1. Make sure you are up to date and on the 'feature/oasis-style' branch (git up; git checkout feature/oasis-style)

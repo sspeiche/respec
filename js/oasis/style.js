@@ -13,7 +13,7 @@ define(
                 if (!conf.specStatus) msg.pub("error", "Configuration 'specStatus' is not set, required for oasis/style");
             	var css = "https://www.oasis-open.org/spectools/css/spec.css";
                 utils.linkCSS(doc, css);
-                utils.linkCSS(doc, 'https://sspeiche.github.io/respec/js/oasis/css/default.css');
+                utils.linkCSS(doc, 'https://ndjc.github.io/respec/js/oasis/css/default.css');
                 msg.pub("end", "oasis/style");
                 cb();
             }
