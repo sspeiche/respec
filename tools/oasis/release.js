@@ -119,7 +119,22 @@ function checkoutDevelop (cb) {
 
 function tag (cb) {
     console.log("About to tag "+targetVersion);
-    exec("git tag -s v" + targetVersion, cb);
+    var tagMsg = "Tagging release "+targetVersion;
+    prompt.get(
+        {
+            description:    "Enter a message for tag "+targetVersion
+        ,   pattern:        /^.*$/
+        ,   message:        ""
+        ,   default:        "Tagging release "+targetVersion
+        }
+    ,   function (err, res) {
+            if (err) return cb(err);
+            tagMsg = res.question;
+            cb();
+        }
+    );
+    console.log("Tagging "+targetVersion+" with message "+tagMsg);
+    exec("git tag -m \""+tagMsg+"\" v" + targetVersion, cb);
 }
 
 // 8. Push everything back to the server (make sure you are pushing at least the `feature/oasis-style` and
