@@ -232,7 +232,7 @@ define(
                               conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
                 }
                 else {
-                    if (conf.specStatus !== "WD" && !conf.noStdTrack && !conf.isNoTrack)
+                    if (conf.specStatus !== "WD" && conf.specStatus !== "ED" && !conf.noStdTrack && !conf.isNoTrack)
                         msg.pub("error", "Document on track but no previous version.");
                     if (!conf.prevVersion) conf.prevVersion = "";
                 }
