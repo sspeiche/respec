@@ -87,31 +87,38 @@ function buildAddCommitMergeTag (cb) {
 }
 
 function build (cb) {
+    console.log("About to build "+targetVersion);
     bwc.buildW3C(targetVersion, cb);
 }
 
 function add (cb) {
     var path = rel("../../builds/oasis/respec-oasis-common-" + targetVersion + ".js");
+    console.log("About to add "+path);
     exec("git add " + path, cb);
 }
 
 function commit (cb) {
+    console.log("About to commit ");
     exec("git commit -am v" + targetVersion, cb);
 }
 
 function checkoutGHPages (cb) {
+    console.log("Switching to gh-pages branch");
     exec("git checkout gh-pages", cb);
 }
 
 function merge (cb) {
+    console.log("About to merge");
     exec("git merge feature/oasis-style", cb);
 }
 
 function checkoutDevelop (cb) {
+    console.log("Switching back to feature/oasis-style");
     exec("git checkout feature/oasis-style", cb);
 }
 
 function tag (cb) {
+    console.log("About to tag "+targetVersion);
     exec("git tag -s v" + targetVersion, cb);
 }
 
@@ -135,10 +142,12 @@ function pushAll (cb) {
 }
 
 function pushCommits (cb) {
+    console.log("About to push");
     exec("git push --all", cb);
 }
 
 function pushTags (cb) {
+    console.log("About to push tags");
     exec("git push --tags", cb);
 }
 
