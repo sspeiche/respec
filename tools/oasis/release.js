@@ -15,11 +15,11 @@ var prompt = require("prompt")
 
 prompt.start();
 
-// 1. Make sure you are up to date and on the features/oasis-style branch (git up; git checkout features/oasis-style)
+// 1. Make sure you are up to date and on the feature/oasis-style branch (git up; git checkout feature/oasis-style)
 function upToDateAndDev (cb) {
     prompt.get(
         {
-            description:    "Are you up to date and on branch features/oasis-style"
+            description:    "Are you up to date and on branch feature/oasis-style"
         ,   pattern:        /^[yn]$/i
         ,   message:        "Values can be 'y' or 'n'."
         ,   default:        "y"
@@ -27,7 +27,7 @@ function upToDateAndDev (cb) {
     ,   function (err, res) {
             var val = res.question.toLowerCase();
             if (err) return cb(err);
-            if (val === "n") return cb("Make sure to run git up; git checkout features/oasis-style");
+            if (val === "n") return cb("Make sure to run git up; git checkout feature/oasis-style");
             cb();
         }
     );
@@ -67,7 +67,7 @@ function bumpVersion (cb) {
 //    issue).
 // 4. Add the new build (git add builds/respec-w3c-common-3.x.y.js).
 // 5. Commit your changes (git commit -am v3.x.y)
-// 6. Merge to gh-pages (git checkout gh-pages; git merge features/oasis-style)
+// 6. Merge to gh-pages (git checkout gh-pages; git merge feature/oasis-style)
 // 7. Tag the release (git tag v3.x.y) and be sure that git is pushing tags.
 function buildAddCommitMergeTag (cb) {
     prompt.get(
@@ -104,18 +104,18 @@ function checkoutGHPages (cb) {
 }
 
 function merge (cb) {
-    exec("git merge features/oasis-style", cb);
+    exec("git merge feature/oasis-style", cb);
 }
 
 function checkoutDevelop (cb) {
-    exec("git checkout features/oasis-style", cb);
+    exec("git checkout feature/oasis-style", cb);
 }
 
 function tag (cb) {
     exec("git tag -s v" + targetVersion, cb);
 }
 
-// 8. Push everything back to the server (make sure you are pushing at least the `features/oasis-style` and
+// 8. Push everything back to the server (make sure you are pushing at least the `feature/oasis-style` and
 //    `gh-pages` branches).
 function pushAll (cb) {
     prompt.get(
