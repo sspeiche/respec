@@ -21,14 +21,14 @@ define(
             		return (str+'').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
             	};
 
-            	/* See if name begins with namespace, if so replace with prefix from prefixMap */
-            	var addNSPrefix = function(name, namespace) {
+            	/* See if url begins with namespace, if so replace with prefix from prefixMap */
+            	var getPrefixedName = function(url) {
             		var prefixedName = null;
             		$.each(prefixMap || [], function(i, it) {
-            			var pattern = new RegExp("^"+it);
-            			if (pattern.test(namespace)) {
-            				prefixedName = i + ":" + name;
-            				return prefixedName
+                        var pattern = new RegExp("^"+it+"(.*)$");
+                        var matches = pattern.exec(url+'');
+                        if (matches) {
+                            prefixedName = i + ":" + matches[1];
             			}
             		});
             		return prefixedName;
@@ -40,7 +40,7 @@ define(
     			    	readOnly: {long: "unspecified", short: "unspecified" },
     			    	valType:  {long: "http://www.w3.org/2001/XMLSchema#string", short: "string"},
     			    	rep:      {long: "http://open-services.net/ns/core#Either", short: "Either"},
-    			    	range:    {long: "N/A", short: "N/A"},
+    			    	range:    {long: [], short: []},
     			    	description: {long: "", short: ""}
     			    }
 
@@ -53,11 +53,13 @@ define(
                 var fillHBJson = function(store, triples, map) {
         		    // extract value data and read as literal value if it is
         		    function extractHBJson (found,nt) {
-            			var o = found[0].object;
+            			var o = found.object;
             			if (N3.Util.isLiteral(o)) {
             			    o = N3.Util.getLiteralValue(o);
             			}
-            			if (!nt.dontCompact) {
+                        if (nt.getPrefixedName) {
+                            o = getPrefixedName(o) || o;
+                        } else if (!nt.dontCompact) {
             			    var r = /#.*$/.exec(o);
             			    if (r && r.length > 0) o = r[0].substring(1);
             			}
@@ -71,9 +73,9 @@ define(
     				    	if (results.length > 0) {
                 				// apply extract function for each of its elements
     				    		if (nt.multiValue) {
-                				    it[nt.name] = results.map(extractHBJson(results, nt))
+                				    it[nt.name] = results.map(function(cv,i){return extractHBJson(cv,nt);});
 				    		    } else {
-            				    it[nt.name] = extractHBJson(results, nt)
+            				    it[nt.name] = extractHBJson(results[0], nt)
     				    		}
     				    	}
     			    	});
@@ -140,7 +142,7 @@ define(
 			    if (!shapeSubject) {
 			    	shape = store.find(null, rdfType, oslcShape);
 			    	if (shape.length < 1) { console.log("Can't locate oslc:ResourceShape"); return null;}
-			    	else if (shape.length > 1) { console.log("Foound multiple shape definitions, using: " + shape[0].subject); }
+			    	else if (shape.length > 1) { console.log("Found multiple shape definitions, using: " + shape[0].subject); }
 			    	var shapeSubject = shape[0].subject;
 			    }
 			    var conf = {};
@@ -159,30 +161,30 @@ define(
 			    var props = store.find(shapeSubject, oslcProp, null);
  			    conf.props = props;
 
-			    var validValues = {
-			    	oslcValType: [
-			    	        "http://www.w3.org/2001/XMLSchema#boolean",
-			    		    "http://www.w3.org/2001/XMLSchema#dateTime",
-			    		    "http://www.w3.org/2001/XMLSchema#decimal",
-			    		    "http://www.w3.org/2001/XMLSchema#double",
-			    		    "http://www.w3.org/2001/XMLSchema#float",
-			    		    "http://www.w3.org/2001/XMLSchema#integer",
-						 	"http://www.w3.org/2001/XMLSchema#string",
-						 	"http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
-						 	"http://open-services.net/ns/core#Resource",
-						 	"http://open-services.net/ns/core#LocalResource",
-						 	"http://open-services.net/ns/core#AnyResource"],
-					oslcOccurs: ["http://open-services.net/ns/core#Exactly-one",
-					             "http://open-services.net/ns/core#Zero-or-one",
-					             "http://open-services.net/ns/core#Zero-or-many",
-					             "http://open-services.net/ns/core#One-or-many"],
-			    };
+//			    var validValues = {
+//			    	oslcValType: [
+//			    	        "http://www.w3.org/2001/XMLSchema#boolean",
+//			    		    "http://www.w3.org/2001/XMLSchema#dateTime",
+//			    		    "http://www.w3.org/2001/XMLSchema#decimal",
+//			    		    "http://www.w3.org/2001/XMLSchema#double",
+//			    		    "http://www.w3.org/2001/XMLSchema#float",
+//			    		    "http://www.w3.org/2001/XMLSchema#integer",
+//						 	"http://www.w3.org/2001/XMLSchema#string",
+//						 	"http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
+//						 	"http://open-services.net/ns/core#Resource",
+//						 	"http://open-services.net/ns/core#LocalResource",
+//						 	"http://open-services.net/ns/core#AnyResource"],
+//					oslcOccurs: ["http://open-services.net/ns/core#Exactly-one",
+//					             "http://open-services.net/ns/core#Zero-or-one",
+//					             "http://open-services.net/ns/core#Zero-or-many",
+//					             "http://open-services.net/ns/core#One-or-many"],
+//			    };
 
 			    var inputMap = [{predicate: oslcOccurs, name: "occurs"},
 			                    {predicate: oslcReadonly, name: "readOnly"},
 			                    {predicate: oslcValType, name: "valType"},
 			                    {predicate: oslcRep, name: "rep"},
-			                    {predicate: oslcRange, name: "range", multiValue: true},
+			                    {predicate: oslcRange, name: "range", multiValue: true, getPrefixedName: true},
 			                    {predicate: oslcPropDefn, name: "propURI", dontCompact: true},
 			                    {predicate: dcDescription, name: "description"},
 			                    {predicate: oslcName, name: "name"}];
@@ -194,8 +196,8 @@ define(
 			    $.each(props, function(i, it) {
 			    	if (!it.name && it.propURI)
 			    		it.name = /#.*$/.exec(it.propURI)[0].substring(1);
-			    	if (it.name && !it.prefixedName)
-			    		it.prefixedName = addNSPrefix(it.name, it.propURI);
+			    	if (!it.prefixedName && it.propURI)
+			    		it.prefixedName = getPrefixedName(it.propURI);
 			    });
                 props.sort(function(a, b) { return a.prefixedName.localeCompare(b.prefixedName); });
 
