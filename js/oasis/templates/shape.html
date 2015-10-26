@@ -14,6 +14,7 @@
   <th><em>Occurs</em></th>
   <th><em>Read-only</em></th>
   <th><em>Value-type</em></th>
+  <th><em>Representation</em></th>
   <th><em>Range</em></th>
   <th><em>Description</em></th>
 </tr>
@@ -25,7 +26,8 @@
   <td>{{occurs}}</td>
   <td>{{readOnly}}</td>
   <td>{{valType}}</td>
-  <td>{{range}}</td>
+  <td>{{rep}}</td>
+  <td>{{#each range}}<code>{{this}}</code>{{#unless @last}}, {{/unless}}{{/each}}</td>
   <td>{{{description}}}</td>
 </tr>
 {{/each}}
