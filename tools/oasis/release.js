@@ -128,7 +128,7 @@ function tag (cb) {
         ,   default:        tagMsg
         }
     ,   function (err, res) {
-            var val = res.question.toLowerCase();
+            tagMsg = res.question;
             if (err) return cb(err);
             console.log("Tagging "+targetVersion+" with message "+tagMsg);
             exec("git tag -f -m \""+tagMsg+"\" v" + targetVersion, cb);
