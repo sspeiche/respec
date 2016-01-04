@@ -53,7 +53,7 @@ define("requireLib", function(){});
 
 
 define('domReady',[],function () {
-    
+
 
     var isTop, testDiv, scrollIntervalId,
         isBrowser = typeof window !== "undefined" && window.document,
@@ -268,7 +268,7 @@ define(
                     }
                 });
                 respecEvents.pub("start", "core/base-runner");
-                
+
                 // the first in the plugs is going to be us
                 plugs.shift();
 
@@ -283,7 +283,7 @@ define(
                 respecConfig.respecBase = baseUrl;
                 respecConfig.scheme = (respecConfig.scheme) ? respecConfig.scheme : location.protocol.replace(":", "").toLowerCase();
                 respecConfig.httpScheme = (respecConfig.scheme === "https") ? "https" : "http";
-                
+
                 var pipeline;
                 pipeline = function () {
                     if (!plugs.length) {
@@ -1158,32 +1158,32 @@ define("core/marked", function(){});
 
 // Module core/markdown
 // Handles the optional markdown processing.
-// 
+//
 // Markdown support is optional. It is enabled by setting the `format`
 // property of the configuration object to "markdown."
-// 
+//
 // We use marked for parsing Markkdown.
-// 
+//
 // Note that the content of SECTION elements, and elements with a
 // class name of "note", "issue" or "req" are also parsed.
-// 
+//
 // The HTML created by the Markdown parser is turned into a nested
-// structure of SECTION elements, following the strucutre given by 
+// structure of SECTION elements, following the strucutre given by
 // the headings. For example, the following markup:
-// 
+//
 //     Title
 //     -----
-//     
+//
 //     ### Subtitle ###
-//     
+//
 //     Here's some text.
-//     
+//
 //     ### Another subtitle ###
-//     
+//
 //     More text.
-// 
+//
 // will be transformed into:
-// 
+//
 //     <section>
 //       <h2>Title</h2>
 //       <section>
@@ -1205,7 +1205,7 @@ define(
             pedantic: false,
             sanitize: false
         });
-        
+
         function makeBuilder(doc) {
             var root = doc.createDocumentFragment()
             ,   stack = [root]
@@ -1294,17 +1294,17 @@ define(
                 text = this.removeLeftPadding(text);
                 return marked(text);
             },
-            
+
             removeLeftPadding: function(text) {
                 // Handles markdown content being nested
                 // inside elements with soft tabs. E.g.:
                 // <div>
                 //     This is a title
                 //     ---------------
-                //     
+                //
                 //     And this more text.
                 // </div
-                // 
+                //
                 // Gets turned into:
                 // <div>
                 //     <h2>This is a title</h2>
@@ -1315,7 +1315,7 @@ define(
                 // <div>
                 //     <pre><code>This is a title
                 // ---------------
-                // 
+                //
                 // And this more text.</code></pre>
                 // </div
 
@@ -1344,21 +1344,21 @@ define(
                 ,   div = doc.createElement('div')
                 ,   node
                 ;
-                
+
                 div.innerHTML = this.toHTML(doc.body.innerHTML);
                 while (node = div.firstChild) {
                     fragment.appendChild(node);
                 }
                 return fragment;
             },
-            
+
             processSections: function(doc) {
                 var self = this;
                 $('section', doc).each(function() {
                     this.innerHTML = self.toHTML(this.innerHTML);
                 });
             },
-            
+
             processIssuesNotesAndReqs: function(doc) {
                 var div = doc.createElement('div');
                 var self = this;
@@ -1371,7 +1371,7 @@ define(
                     }
                 });
             },
-            
+
             structure: function(fragment, doc) {
                 function process(root) {
                     var node
@@ -1554,8 +1554,8 @@ define(
             getTextNodes(this[0]);
             return textNodes;
         };
-        
-        
+
+
         var utils = {
             // --- SET UP
             run:    function (conf, doc, cb, msg) {
@@ -1599,7 +1599,7 @@ define(
                 return str.replace(/^\s+/, "").replace(/\s+$/, "").split(/\s+/).join(" ");
             }
 
-            
+
             // --- DATE HELPERS -------------------------------------------------------------------------------
             // Takes a Date object and an optional separator and returns the year,month,day representation with
             // the custom separator (defaulting to none) and proper 0-padding
@@ -1613,7 +1613,7 @@ define(
                 str = "" + str;
                 return (str.length == 1) ? "0" + str : str;
             }
-            
+
             // takes a YYYY-MM-DD date and returns a Date object for it
         ,   parseSimpleDate:    function (str) {
                 return new Date(str.substr(0, 4), (str.substr(5, 2) - 1), str.substr(8, 2));
@@ -1629,7 +1629,7 @@ define(
             // list of human names for months (in English)
         ,   humanMonths: ["January", "February", "March", "April", "May", "June", "July",
                           "August", "September", "October", "November", "December"]
-        
+
             // given either a Date object or a date in YYYY-MM-DD format, return a human-formatted
             // date suitable for use in a W3C specification
         ,   humanDate:  function (date) {
@@ -1643,8 +1643,8 @@ define(
                 // return "" + date.getUTCFullYear() +'-'+ this.lead0(date.getUTCMonth() + 1)+'-' + this.lead0(date.getUTCDate()) +'T'+this.lead0(date.getUTCHours())+':'+this.lead0(date.getUTCMinutes()) +":"+this.lead0(date.getUTCSeconds())+'+0000';
                 return date.toISOString() ;
             }
-            
-            
+
+
             // --- STYLE HELPERS ------------------------------------------------------------------------------
             // take a document and either a link or an array of links to CSS and appends a <link/> element
             // to the head pointing to each
@@ -1839,85 +1839,85 @@ performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$$,_$) {
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: return $$[$0-1] 
+case 1: return $$[$0-1]
 break;
-case 2: this.$ = new yy.ProgramNode($$[$0-2], $$[$0]) 
+case 2: this.$ = new yy.ProgramNode($$[$0-2], $$[$0])
 break;
-case 3: this.$ = new yy.ProgramNode($$[$0]) 
+case 3: this.$ = new yy.ProgramNode($$[$0])
 break;
-case 4: this.$ = new yy.ProgramNode([]) 
+case 4: this.$ = new yy.ProgramNode([])
 break;
-case 5: this.$ = [$$[$0]] 
+case 5: this.$ = [$$[$0]]
 break;
-case 6: $$[$0-1].push($$[$0]); this.$ = $$[$0-1] 
+case 6: $$[$0-1].push($$[$0]); this.$ = $$[$0-1]
 break;
-case 7: this.$ = new yy.InverseNode($$[$0-2], $$[$0-1], $$[$0]) 
+case 7: this.$ = new yy.InverseNode($$[$0-2], $$[$0-1], $$[$0])
 break;
-case 8: this.$ = new yy.BlockNode($$[$0-2], $$[$0-1], $$[$0]) 
+case 8: this.$ = new yy.BlockNode($$[$0-2], $$[$0-1], $$[$0])
 break;
-case 9: this.$ = $$[$0] 
+case 9: this.$ = $$[$0]
 break;
-case 10: this.$ = $$[$0] 
+case 10: this.$ = $$[$0]
 break;
-case 11: this.$ = new yy.ContentNode($$[$0]) 
+case 11: this.$ = new yy.ContentNode($$[$0])
 break;
-case 12: this.$ = new yy.CommentNode($$[$0]) 
+case 12: this.$ = new yy.CommentNode($$[$0])
 break;
-case 13: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1]) 
+case 13: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1])
 break;
-case 14: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1]) 
+case 14: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1])
 break;
-case 15: this.$ = $$[$0-1] 
+case 15: this.$ = $$[$0-1]
 break;
-case 16: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1]) 
+case 16: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1])
 break;
-case 17: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], true) 
+case 17: this.$ = new yy.MustacheNode($$[$0-1][0], $$[$0-1][1], true)
 break;
-case 18: this.$ = new yy.PartialNode($$[$0-1]) 
+case 18: this.$ = new yy.PartialNode($$[$0-1])
 break;
-case 19: this.$ = new yy.PartialNode($$[$0-2], $$[$0-1]) 
+case 19: this.$ = new yy.PartialNode($$[$0-2], $$[$0-1])
 break;
-case 20: 
+case 20:
 break;
-case 21: this.$ = [[$$[$0-2]].concat($$[$0-1]), $$[$0]] 
+case 21: this.$ = [[$$[$0-2]].concat($$[$0-1]), $$[$0]]
 break;
-case 22: this.$ = [[$$[$0-1]].concat($$[$0]), null] 
+case 22: this.$ = [[$$[$0-1]].concat($$[$0]), null]
 break;
-case 23: this.$ = [[$$[$0-1]], $$[$0]] 
+case 23: this.$ = [[$$[$0-1]], $$[$0]]
 break;
-case 24: this.$ = [[$$[$0]], null] 
+case 24: this.$ = [[$$[$0]], null]
 break;
-case 25: $$[$0-1].push($$[$0]); this.$ = $$[$0-1]; 
+case 25: $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
 break;
-case 26: this.$ = [$$[$0]] 
+case 26: this.$ = [$$[$0]]
 break;
-case 27: this.$ = $$[$0] 
+case 27: this.$ = $$[$0]
 break;
-case 28: this.$ = new yy.StringNode($$[$0]) 
+case 28: this.$ = new yy.StringNode($$[$0])
 break;
-case 29: this.$ = new yy.IntegerNode($$[$0]) 
+case 29: this.$ = new yy.IntegerNode($$[$0])
 break;
-case 30: this.$ = new yy.BooleanNode($$[$0]) 
+case 30: this.$ = new yy.BooleanNode($$[$0])
 break;
-case 31: this.$ = new yy.HashNode($$[$0]) 
+case 31: this.$ = new yy.HashNode($$[$0])
 break;
-case 32: $$[$0-1].push($$[$0]); this.$ = $$[$0-1] 
+case 32: $$[$0-1].push($$[$0]); this.$ = $$[$0-1]
 break;
-case 33: this.$ = [$$[$0]] 
+case 33: this.$ = [$$[$0]]
 break;
-case 34: this.$ = [$$[$0-2], $$[$0]] 
+case 34: this.$ = [$$[$0-2], $$[$0]]
 break;
-case 35: this.$ = [$$[$0-2], new yy.StringNode($$[$0])] 
+case 35: this.$ = [$$[$0-2], new yy.StringNode($$[$0])]
 break;
-case 36: this.$ = [$$[$0-2], new yy.IntegerNode($$[$0])] 
+case 36: this.$ = [$$[$0-2], new yy.IntegerNode($$[$0])]
 break;
-case 37: this.$ = [$$[$0-2], new yy.BooleanNode($$[$0])] 
+case 37: this.$ = [$$[$0-2], new yy.BooleanNode($$[$0])]
 break;
-case 38: this.$ = new yy.IdNode($$[$0]) 
+case 38: this.$ = new yy.IdNode($$[$0])
 break;
-case 39: $$[$0-2].push($$[$0]); this.$ = $$[$0-2]; 
+case 39: $$[$0-2].push($$[$0]); this.$ = $$[$0-2];
 break;
-case 40: this.$ = [$$[$0]] 
+case 40: this.$ = [$$[$0]]
 break;
 }
 },
@@ -2117,7 +2117,7 @@ next:function () {
         if (this._input === "") {
             return this.EOF;
         } else {
-            this.parseError('Lexical error on line '+(this.yylineno+1)+'. Unrecognized text.\n'+this.showPosition(), 
+            this.parseError('Lexical error on line '+(this.yylineno+1)+'. Unrecognized text.\n'+this.showPosition(),
                     {text: "", token: null, line: this.yylineno});
         }
     },
@@ -2152,59 +2152,59 @@ case 0:
                                    if(yy_.yytext.slice(-1) !== "\\") this.begin("mu");
                                    if(yy_.yytext.slice(-1) === "\\") yy_.yytext = yy_.yytext.substr(0,yy_.yyleng-1), this.begin("emu");
                                    if(yy_.yytext) return 14;
-                                 
+
 break;
-case 1: return 14; 
+case 1: return 14;
 break;
-case 2: this.popState(); return 14; 
+case 2: this.popState(); return 14;
 break;
-case 3: return 24; 
+case 3: return 24;
 break;
-case 4: return 16; 
+case 4: return 16;
 break;
-case 5: return 20; 
+case 5: return 20;
 break;
-case 6: return 19; 
+case 6: return 19;
 break;
-case 7: return 19; 
+case 7: return 19;
 break;
-case 8: return 23; 
+case 8: return 23;
 break;
-case 9: return 23; 
+case 9: return 23;
 break;
-case 10: yy_.yytext = yy_.yytext.substr(3,yy_.yyleng-5); this.popState(); return 15; 
+case 10: yy_.yytext = yy_.yytext.substr(3,yy_.yyleng-5); this.popState(); return 15;
 break;
-case 11: return 22; 
+case 11: return 22;
 break;
-case 12: return 34; 
+case 12: return 34;
 break;
-case 13: return 33; 
+case 13: return 33;
 break;
-case 14: return 33; 
+case 14: return 33;
 break;
-case 15: return 36; 
+case 15: return 36;
 break;
-case 16: /*ignore whitespace*/ 
+case 16: /*ignore whitespace*/
 break;
-case 17: this.popState(); return 18; 
+case 17: this.popState(); return 18;
 break;
-case 18: this.popState(); return 18; 
+case 18: this.popState(); return 18;
 break;
-case 19: yy_.yytext = yy_.yytext.substr(1,yy_.yyleng-2).replace(/\\"/g,'"'); return 28; 
+case 19: yy_.yytext = yy_.yytext.substr(1,yy_.yyleng-2).replace(/\\"/g,'"'); return 28;
 break;
-case 20: return 30; 
+case 20: return 30;
 break;
-case 21: return 30; 
+case 21: return 30;
 break;
-case 22: return 29; 
+case 22: return 29;
 break;
-case 23: return 33; 
+case 23: return 33;
 break;
-case 24: yy_.yytext = yy_.yytext.substr(1, yy_.yyleng-2); return 33; 
+case 24: yy_.yytext = yy_.yytext.substr(1, yy_.yyleng-2); return 33;
 break;
-case 25: return 'INVALID'; 
+case 25: return 'INVALID';
 break;
-case 26: return 5; 
+case 26: return 5;
 break;
 }
 };
@@ -3446,7 +3446,7 @@ define(
             }
             return new Handlebars.SafeString(ret);
         });
-        
+
 
         return {
             status2maturity:    {
@@ -3507,7 +3507,7 @@ define(
         ,   noTrackStatus:  ["MO", "unofficial", "base", "finding", "draft-finding", "CG-DRAFT", "CG-FINAL", "BG-DRAFT", "BG-FINAL"]
         ,   cgbg:           ["CG-DRAFT", "CG-FINAL", "BG-DRAFT", "BG-FINAL"]
         ,   precededByAn:   ["ED", "IG-NOTE"]
-                        
+
         ,   run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "w3c/headers");
 
@@ -3624,7 +3624,7 @@ define(
                 conf.dashDate = utils.concatDate(conf.publishDate, "-");
                 conf.publishISODate = utils.isoDate(conf.publishDate) ;
                 // configuration done - yay!
-                
+
                 // annotate html element with RFDa
                 if (conf.doRDFa) {
                     if (conf.rdfStatus) {
@@ -3968,7 +3968,7 @@ define(
             }
             return $tit;
         };
-        
+
         return {
             run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "core/examples");
@@ -4182,7 +4182,7 @@ define(
         return {
             run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "core/highlight");
-                
+
                 // fix old classes
                 var oldies = "sh_css sh_html sh_javascript sh_javascript_dom sh_xml".split(" ");
                 for (var i = 0, n = oldies.length; i < n; i++) {
@@ -4191,7 +4191,7 @@ define(
                         $(this).removeClass(old).addClass("highlight");
                     });
                 }
-                
+
                 // prettify
                 var $highs = $("pre.highlight, code.highlight")
                 ,   done = function () {
@@ -5759,7 +5759,7 @@ define(
                                 $figure.find("[alt]").attr("alt") ||
                                 "";
                     var $caption = $("<figcaption/>").text(title);
-                    
+
                     // change old syntax to something HTML5 compatible
                     if ($figure.is("div")) {
                         $figure.append($caption);
@@ -5770,7 +5770,7 @@ define(
                         $figure.parent().append($caption);
                     }
                 });
-                
+
                 // process all figures
                 var figMap = {}, tof = [], num = 0;
                 $("figure").each(function () {
@@ -5778,7 +5778,7 @@ define(
                     ,   $cap = $fig.find("figcaption")
                     ,   tit = $cap.text()
                     ,   id = $fig.makeID("fig", tit);
-                    
+
                     // set proper caption title
                     num++;
                     $cap.html("")
@@ -5804,7 +5804,7 @@ define(
                         if ($a.html() === "") $a.append(figMap[id]);
                     }
                 });
-                
+
                 // Create a Table of Figures if a section with id 'tof' exists.
                 var $tof = $("#tof", doc);
                 if (tof.length && $tof.length) {
@@ -5909,7 +5909,7 @@ var sn;
             refs = refs.normativeReferences.concat(refs.informativeReferences).concat(this.findLocalAliases(conf));
             if (refs.length) {
                 count++;
-                src = conf.httpScheme + "://specref.jit.su/bibrefs?callback=setBerjonBiblio&refs=" + refs.join(',');
+                src = conf.httpScheme + "://labs.w3.org/specrefs/bibrefs?callback=setBerjonBiblio&refs=" + refs.join(',');
                 this.loadScript(src, loadHandler);
             }
 
@@ -8087,7 +8087,7 @@ define(
                     $kidsHolder.find("a").renameElement("span").attr("class", "formerLink").removeAttr("href");
                     $kidsHolder.find("dfn").renameElement("span").removeAttr("id");
                     var id = $sec.makeID(null, title);
-                    
+
                     if (!isIntro) current[current.length - 1]++;
                     var secnos = current.slice();
                     if ($sec.hasClass("appendix") && current.length === 1 && !appendixMode) {
@@ -8123,7 +8123,7 @@ define(
                 return $ul;
             }
         ;
-        
+
         return {
             run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "core/structure");
@@ -8418,25 +8418,25 @@ berjon.simpleNode.prototype = {
         }
         return el;
     },
-    
+
     text:    function (txt, parent) {
         var tn = this.doc.createTextNode(txt);
         if (parent) parent.appendChild(tn);
         return tn;
     },
-    
+
     comment:    function (txt, parent) {
         var cmt = this.doc.createComment(txt);
         if (parent) parent.appendChild(cmt);
         return cmt;
     },
-    
+
     pi:    function (target, data, parent) {
         var pi = this.doc.createProcessingInstruction(target, data);
         if (parent) parent.appendChild(pi);
         return pi;
     },
-    
+
     documentFragment:    function (parent, content) {
         var df = this.doc.createDocumentFragment();
         if (content) {
@@ -8446,7 +8446,7 @@ berjon.simpleNode.prototype = {
         if (parent) parent.appendChild(df);
         return df;
     },
-    
+
     // --- FINDING STUFF ---
     findNodes:    function (xpath, context) {
         if (!context) context = this.doc;
@@ -8460,19 +8460,19 @@ berjon.simpleNode.prototype = {
         for (var i = 0; i < snap.snapshotLength; i++) res.push(snap.snapshotItem(i));
         return res;
     },
-    
+
     // --- MANIPULATION ---
     copyChildren:   function (from, to) {
         while (from.childNodes.length) to.appendChild(from.firstChild);
     },
-    
+
     copyAttr:   function (from, to) {
         for (var i = 0; i < from.attributes.length; i++) {
             var at = from.attributes[i];
             to.setAttributeNS(at.namespaceURI, at.name, at.value);
         }
     },
-    
+
     renameEl:   function (el, name) {
         // we remove, copy, then insert instead of just replacing because it's a *lot*
         // faster if the copyChildren operation is done while the node is not being displayed
@@ -8486,7 +8486,7 @@ berjon.simpleNode.prototype = {
         if (par) par.insertBefore(newEl, folSib);
         return newEl;
     },
-    
+
     // --- ID MANAGEMENT ---
     makeID: function (el, pfx, txt) {
         if (el.hasAttribute("id")) return el.getAttribute("id");
@@ -8506,7 +8506,7 @@ berjon.simpleNode.prototype = {
         el.setAttribute("id", id);
         return id;
     },
-    
+
     sanitiseID:    function (id) {
         id = id.split(/[^\-.0-9a-zA-Z_]/).join("-");
         id = id.replace(/^-+/g, "");
@@ -8515,7 +8515,7 @@ berjon.simpleNode.prototype = {
         if (id.length === 0) id = "generatedID";
         return id;
     },
-    
+
     idCache: {},
     idThatDoesNotExist:    function (id) {
         var inc = 1;
@@ -8527,19 +8527,19 @@ berjon.simpleNode.prototype = {
         // this.idCache[id] = true;
         return id;
     },
-    
+
     // --- CLASS HANDLING ---
     hasClass:    function (el, cl) {
         return this.listClasses(el).indexOf(cl) >= 0;
     },
-    
+
     addClass:    function (el, cl) {
         var ls = this.listClasses(el);
         if (ls.indexOf(cl) >= 0) return;
         ls.push(cl);
         this.setClassList(el, ls);
     },
-    
+
     removeClass:    function (el, cl) {
         var ls = this.listClasses(el);
         var idx = ls.indexOf(cl);
@@ -8547,18 +8547,18 @@ berjon.simpleNode.prototype = {
         ls.splice(idx, 1);
         this.setClassList(el, ls);
     },
-    
+
     listClasses:    function (el) {
         if (el.hasAttribute("class")) {
             return el.getAttribute("class").split(/\s+/);
         }
         else return [];
     },
-    
+
     setClassList:    function (el, ls) {
         el.setAttribute("class", ls.join(" "));
     },
-    
+
     // --- HELPERS ---
     _nameToQName:    function (name, isAttr) {
         var matches = /^(.+):(.+)$/.exec(name);
@@ -8576,7 +8576,7 @@ berjon.simpleNode.prototype = {
         }
         return { ns: ns, ln: ln };
     },
-    
+
     _setAttr:    function (el, name, value) {
         var nmSt = this._nameToQName(name, true);
         el.setAttributeNS(nmSt.ns, nmSt.ln, value);
@@ -8617,7 +8617,7 @@ shortcut = {
 		//The function to be called at keypress
 		var func = function(e) {
 			e = e || window.event;
-			
+
 			if(opt['disable_in_input']) { //Don't enable shortcut keys in Input, Textarea fields
 				var element;
 				if(e.target) element=e.target;
@@ -8626,19 +8626,19 @@ shortcut = {
 
 				if(element.tagName == 'INPUT' || element.tagName == 'TEXTAREA') return;
 			}
-	
+
 			//Find Which key is pressed
 			if (e.keyCode) code = e.keyCode;
 			else if (e.which) code = e.which;
 			var character = String.fromCharCode(code).toLowerCase();
-			
+
 			if(code == 188) character=","; //If the user presses , when the type is onkeydown
 			if(code == 190) character="."; //If the user presses , when the type is onkeydown
 
 			var keys = shortcut_combination.split("+");
 			//Key Pressed - counts the number of valid keypresses - if it is same as the number of keys, the shortcut function is invoked
 			var kp = 0;
-			
+
 			//Work around for stupid Shift key bug created by using lowercase - as a result the shift+num combination was broken
 			var shift_nums = {
 				"`":"~",
@@ -8670,7 +8670,7 @@ shortcut = {
 				'return':13,
 				'enter':13,
 				'backspace':8,
-	
+
 				'scrolllock':145,
 				'scroll_lock':145,
 				'scroll':145,
@@ -8680,28 +8680,28 @@ shortcut = {
 				'numlock':144,
 				'num_lock':144,
 				'num':144,
-				
+
 				'pause':19,
 				'break':19,
-				
+
 				'insert':45,
 				'home':36,
 				'delete':46,
 				'end':35,
-				
+
 				'pageup':33,
 				'page_up':33,
 				'pu':33,
-	
+
 				'pagedown':34,
 				'page_down':34,
 				'pd':34,
-	
+
 				'left':37,
 				'up':38,
 				'right':39,
 				'down':40,
-	
+
 				'f1':112,
 				'f2':113,
 				'f3':114,
@@ -8715,19 +8715,19 @@ shortcut = {
 				'f11':122,
 				'f12':123
 			}
-	
-			var modifiers = { 
+
+			var modifiers = {
 				shift: { wanted:false, pressed:false},
 				ctrl : { wanted:false, pressed:false},
 				alt  : { wanted:false, pressed:false},
 				meta : { wanted:false, pressed:false}	//Meta is Mac specific
 			};
-                        
+
 			if(e.ctrlKey)	modifiers.ctrl.pressed = true;
 			if(e.shiftKey)	modifiers.shift.pressed = true;
 			if(e.altKey)	modifiers.alt.pressed = true;
 			if(e.metaKey)   modifiers.meta.pressed = true;
-                        
+
 			for(var i=0; k=keys[i],i<keys.length; i++) {
 				//Modifiers
 				if(k == 'ctrl' || k == 'control') {
@@ -8746,7 +8746,7 @@ shortcut = {
 					modifiers.meta.wanted = true;
 				} else if(k.length > 1) { //If it is a special key
 					if(special_keys[k] == code) kp++;
-					
+
 				} else if(opt['keycode']) {
 					if(opt['keycode'] == code) kp++;
 
@@ -8754,25 +8754,25 @@ shortcut = {
 					if(character == k) kp++;
 					else {
 						if(shift_nums[character] && e.shiftKey) { //Stupid Shift key bug created by using lowercase
-							character = shift_nums[character]; 
+							character = shift_nums[character];
 							if(character == k) kp++;
 						}
 					}
 				}
 			}
-			
-			if(kp == keys.length && 
+
+			if(kp == keys.length &&
 						modifiers.ctrl.pressed == modifiers.ctrl.wanted &&
 						modifiers.shift.pressed == modifiers.shift.wanted &&
 						modifiers.alt.pressed == modifiers.alt.wanted &&
 						modifiers.meta.pressed == modifiers.meta.wanted) {
 				callback(e);
-	
+
 				if(!opt['propagate']) { //Stop the event
 					//e.cancelBubble is supported by IE - this will kill the bubbling process.
 					e.cancelBubble = true;
 					e.returnValue = false;
-	
+
 					//e.stopPropagation works in Firefox.
 					if (e.stopPropagation) {
 						e.stopPropagation();
@@ -8783,8 +8783,8 @@ shortcut = {
 			}
 		}
 		this.all_shortcuts[shortcut_combination] = {
-			'callback':func, 
-			'target':ele, 
+			'callback':func,
+			'target':ele,
 			'event': opt['type']
 		};
 		//Attach the function with the event
