@@ -161,24 +161,15 @@ define(
 			    var props = store.find(shapeSubject, oslcProp, null);
  			    conf.props = props;
 
-//			    var validValues = {
-//			    	oslcValType: [
-//			    	        "http://www.w3.org/2001/XMLSchema#boolean",
-//			    		    "http://www.w3.org/2001/XMLSchema#dateTime",
-//			    		    "http://www.w3.org/2001/XMLSchema#decimal",
-//			    		    "http://www.w3.org/2001/XMLSchema#double",
-//			    		    "http://www.w3.org/2001/XMLSchema#float",
-//			    		    "http://www.w3.org/2001/XMLSchema#integer",
-//						 	"http://www.w3.org/2001/XMLSchema#string",
-//						 	"http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral",
-//						 	"http://open-services.net/ns/core#Resource",
-//						 	"http://open-services.net/ns/core#LocalResource",
-//						 	"http://open-services.net/ns/core#AnyResource"],
-//					oslcOccurs: ["http://open-services.net/ns/core#Exactly-one",
-//					             "http://open-services.net/ns/core#Zero-or-one",
-//					             "http://open-services.net/ns/core#Zero-or-many",
-//					             "http://open-services.net/ns/core#One-or-many"],
-//			    };
+			    var oslcLitTypes = {
+			    	        "boolean":true,
+			    		    "dateTime":true,
+			    		    "decimal":true,
+			    		    "double":true,
+			    		    "float":true,
+			    		    "integer":true,
+						 	"string":true,
+						 	"XMLLiteral":true};
 
 			    var inputMap = [{predicate: oslcOccurs, name: "occurs"},
 			                    {predicate: oslcReadonly, name: "readOnly"},
@@ -192,15 +183,16 @@ define(
 			    // Map from object values to text/label entries for the spec tables
 			    fillHBJson(store, props, inputMap);
 
-			    // Need to set the name and prefixedName
+			    // Need to set the name and prefixedName, and to adjust representation
 			    $.each(props, function(i, it) {
 			    	if (!it.name && it.propURI)
 			    		it.name = /#.*$/.exec(it.propURI)[0].substring(1);
 			    	if (!it.prefixedName && it.propURI)
 			    		it.prefixedName = getPrefixedName(it.propURI);
+			    	if (oslcLitTypes[it.valType])
+			    	    it.rep = "N/A";
 			    });
                 props.sort(function(a, b) { return a.prefixedName.localeCompare(b.prefixedName); });
-
 
 			    var html = shapeTmpl(conf);
 
