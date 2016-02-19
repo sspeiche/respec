@@ -1,11 +1,16 @@
+{{#if URI}}
 <ul>
 <li><strong>Name:</strong> <code>{{name}}</code></li>
 <li><strong>URI: </strong> <code>{{typeURI}}</code></li>
 <li><strong>Summary:</strong> {{{title}}}</li>
 {{#if description}}<li><strong>Description:</strong> {{{description}}}</li>{{/if}}
 </ul>
+{{else}}
+<p>{{{title}}}</p>
+{{#if description}}<p>{{{description}}}</p>{{/if}}
+{{/if}}
 
-<b>{{name}} Properties</b>
+{{#if name}}<b>{{name}} Properties</b>{{/if}}
 
 <table class="simple">
 <thead>

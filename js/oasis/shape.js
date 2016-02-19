@@ -149,8 +149,12 @@ define(
 			    conf.subject = shapeSubject;
 
 			    var typeURI = store.find(shapeSubject, oslcDescribes, null);
-			    conf.typeURI = typeURI[0].object;
-			    conf.name = /#.*$/.exec(conf.typeURI)[0].substring(1);
+			    // Allow missing oslc:describes, or oslc:describes == oslc:Any, to indicate these are common properties
+			    if (typeURI.length > 0 && typeURI[0].object === "http://open-services.net/ns/core#Any")
+                {
+                   conf.typeURI = typeURI[0].object;
+                   conf.name = /[#/][^/]*$/.exec(conf.typeURI)[0].substring(1);
+                }
 
 			    var title = store.find(shapeSubject, dcTitle, null);
 			    conf.title = N3.Util.getLiteralValue(title[0].object);
@@ -186,7 +190,7 @@ define(
 			    // Need to set the name and prefixedName, and to adjust representation
 			    $.each(props, function(i, it) {
 			    	if (!it.name && it.propURI)
-			    		it.name = /#.*$/.exec(it.propURI)[0].substring(1);
+			    		it.name = /[#/][^/]*$/.exec(it.propURI)[0].substring(1);
 			    	if (!it.prefixedName && it.propURI)
 			    		it.prefixedName = getPrefixedName(it.propURI);
 			    	if (oslcLitTypes[it.valType])
@@ -195,7 +199,6 @@ define(
                 props.sort(function(a, b) { return a.prefixedName.localeCompare(b.prefixedName); });
 
 			    var html = shapeTmpl(conf);
-
 				return html;
             }
         };
