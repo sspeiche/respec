@@ -150,7 +150,7 @@ define(
 
 			    var typeURI = store.find(shapeSubject, oslcDescribes, null);
 			    // Allow missing oslc:describes, or oslc:describes == oslc:Any, to indicate these are common properties
-			    if (typeURI.length > 0 && typeURI[0].object !== "http://open-services.net/ns/core#Any")
+			    if (typeURI.length > 0 && typeURI[0].object != "http://open-services.net/ns/core#Any")
                 {
                    conf.typeURI = typeURI[0].object;
                    conf.name = /[#/][^/]*$/.exec(conf.typeURI)[0].substring(1);
