@@ -221,6 +221,7 @@ define(
                 if (conf.specStatus === "ED") conf.thisVersion = conf.edDraftURI;
                 // TODO: Determine right URI production
                 // conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
+                if (!conf.tcBaseURI) conf.tcBaseURI = "https://www.oasis-open.org/committees";
                 if (conf.previousPublishDate) {
                     if (!conf.previousMaturity)
                         msg.pub("error", "previousPublishDate is set, but not previousMaturity");

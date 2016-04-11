@@ -86,8 +86,28 @@
         {{/if}}
       {{/each}}
     {{/if}}
+    {{#if additionalArtifacts}}
+     <br/><dt class='loc-heading'>Additional artifacts:</dt>
+     <dd>This specification is one component of a Work Product that also includes:
+     <ul>
+     {{#each additionalArtifacts}}
+       <li>
+       {{#if title}}{{title}}{{/if}}
+       {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
+       </li>
+     {{/each}}
+     </ul></dd>
+    {{/if}}
+    {{#if relatedWork}}
+     <br/><dt class='loc-heading'>Related work:</dt>
+     {{#each relatedWork}}
+       {{#if href}}
+          <dd><a href='{{href}}'>{{href}}</a></dd>
+       {{/if}}
+     {{/each}}
+    {{/if}}
     {{#if namespaces}}
-     <br/><dt class='loc-heading'>Namespaces:</dt>
+     <br/><dt class='loc-heading'>RDF Namespaces:</dt>
      {{#each namespaces}}
        {{#if href}}
           <dd><a href='{{href}}'>{{href}}</a></dd>
@@ -100,13 +120,15 @@
     <dd>{{{status}}}</dd>
     {{#if citationLabel}}<br/><dt class='loc-heading'>Citation format:</dt>
     <dd>When referencing this specification the following citation format should be used:
-    <br>[{{citationLabel}}]
+    <p>
+    <span class='citationLabel'><strong>[{{citationLabel}}]</strong></span><br>
     <span class='citationTitle'>{{title}}</span>.
     Edited by {{editorsHTML}}.
     {{publishHumanDate}}.
     {{textStatus}} {{revision}}.
     <a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a>.
     {{#if latestVersion}}Latest version: <a href='{{latestVersion}}'>{{latestVersion}}</a>.{{/if}}
+    </p>
     </dd>{{/if}}
   </dl>
   {{#if errata}}
