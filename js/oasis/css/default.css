@@ -61,6 +61,10 @@
 	padding: 3px 1em;
 }
 
+.citationLabel {
+    font-weight: bold;
+}
+
 .citationTitle {
     font-style: italic;
 }
