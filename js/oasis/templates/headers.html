@@ -92,19 +92,35 @@
      <ul>
      {{#each additionalArtifacts}}
        <li>
-       {{#if title}}{{title}}{{/if}}
+       {{#if title}}{{title}},{{/if}}
+       {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
+       </li>
+     {{/each}}
+     </ul></dd>
+    {{/if}}
+    {{#if supersedes}}
+     <br/><dt class='loc-heading'>Related work:</dt>
+     <dd>This specification replaces or supersedes:
+     <ul>
+     {{#each supersedes}}
+       <li>
+       {{#if title}}{{title}},{{/if}}
        {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
        </li>
      {{/each}}
      </ul></dd>
     {{/if}}
     {{#if relatedWork}}
-     <br/><dt class='loc-heading'>Related work:</dt>
+     {{#unless supersedes}}<br/><dt class='loc-heading'>Related work:</dt>{{/unless}}
+     <dd>This specification is related to:
+     <ul>
      {{#each relatedWork}}
-       {{#if href}}
-          <dd><a href='{{href}}'>{{href}}</a></dd>
-       {{/if}}
+       <li>
+       {{#if title}}{{title}},{{/if}}
+       {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
+       </li>
      {{/each}}
+     </ul></dd>
     {{/if}}
     {{#if namespaces}}
      <br/><dt class='loc-heading'>RDF Namespaces:</dt>

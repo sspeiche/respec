@@ -9,7 +9,6 @@
 //  - specStatus: the short code for the specification's maturity level or type (required)
 //  - shortName: the small name that is used after /TR/ in published reports (required)
 //  - revision: the revision number of the document at its given stage (required)
-//  - oslcVersion: the OSLC version number of the spec (1.0, 2.0, etc.), if any
 //  - citationLabel: the citation label for the spec. If missing, no citation section is generated.
 //  - editors: an array of people editing the document (at least one is required). People
 //      are defined using:
@@ -200,7 +199,6 @@ define(
                 if (!conf.shortName) msg.pub("error", "Missing required configuration: shortName");
                 if (!conf.revision) msg.pub("error", "Missing required configuration: revision");
                 conf.title = doc.title || "No Title";
-                if (conf.oslcVersion) conf.title = conf.title + " " + conf.oslcVersion;
                 if (!conf.subtitle) conf.subtitle = "";
                 if (!conf.publishDate) {
                     conf.publishDate = utils.parseLastModified(doc.lastModified);
