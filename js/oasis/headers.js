@@ -119,13 +119,13 @@ define(
                 else {
                     ret += "<span" + rn + " class='p-name fn'>" + p.name + "</span>";
                 }
+                if (p.mailto) {
+                    ret += " (<span class='ed_mailto'><a class='u-email email' " + rm + " href='mailto:" + p.mailto + "'>" + p.mailto + "</a></span>)";
+                }
                 if (p.company) {
                     ret += ", ";
                     if (p.companyURL) ret += "<a" + rwu + " class='p-org org h-org h-card' href='" + p.companyURL + "'>" + p.company + "</a>";
                     else ret += p.company;
-                }
-                if (p.mailto) {
-                    ret += ", <span class='ed_mailto'><a class='u-email email' " + rm + " href='mailto:" + p.mailto + "'>" + p.mailto + "</a></span>";
                 }
                 if (p.note) ret += " (" + p.note + ")";
                 if (this.doRDFa !== false ) ret += "</span>\n";
@@ -181,6 +181,7 @@ define(
         ,   stdTrackStatus: ["WD", "CSD", "CSPRD", "CS", "COS", "OS", "Errata"]
         ,   noTrackStatus:  ["CND", "CNPRD", "CN", "unofficial", "base"]
         ,   precededByAn:   ["ED"]
+        ,   unPublished:    ["ED","WD","unofficial", "base"]
 
         ,   run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/headers");
@@ -230,11 +231,7 @@ define(
                     conf.prevVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/" + conf.previousPublishDate.getFullYear() + "/" + pmat + "-" +
                               conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
                 }
-                else {
-                    if (conf.specStatus !== "WD" && conf.specStatus !== "ED" && !conf.noStdTrack && !conf.isNoTrack)
-                        msg.pub("error", "Document on track but no previous version.");
-                    if (!conf.prevVersion) conf.prevVersion = "";
-                }
+                if (!conf.prevVersion) conf.prevVersion = "";
                 if (conf.prevRecShortname && !conf.prevRecURI) conf.prevRecURI = "http://docs.oasis-open.org/" + conf.prevRecShortname;
                 if (!conf.editors || conf.editors.length === 0) msg.pub("error", "At least one editor is required");
                 var peopCheck = function (i, it) {
@@ -274,14 +271,34 @@ define(
                 conf.notStd = (conf.specStatus !== "OS");
                 conf.isUnofficial = conf.specStatus === "unofficial";
                 conf.prependOASIS = !conf.isUnofficial;
-                conf.isWD = (conf.specStatus === "WD");
+                conf.isWD = (conf.specStatus === "WD" || conf.specStatus === "ED");
                 conf.isCS = (conf.specStatus === "CS");
                 conf.isCSPR = (conf.specStatus === "CSPRD");
+                conf.isCNPR = (conf.specStatus === "CNPRD");
                 conf.isCOS = (conf.specStatus === "COS");
                 conf.isOS = (conf.specStatus === "OS");
                 conf.isAE = (conf.specStatus === "Errata");
                 conf.dashDate = utils.concatDate(conf.publishDate, "-");
                 conf.publishISODate = utils.isoDate(conf.publishDate) ;
+
+                if ($.inArray(conf.specStatus, this.unPublished) < 0) {
+                   if (conf.isCSPR) {
+                      conf.docStatus = [
+                        this.status2text["CSD"] + " " + conf.revision,
+                        conf.textStatus + " " + conf.revision
+                      ];
+                   }
+                   else if (conf.isCNPR) {
+                      conf.docStatus = [
+                        this.status2text["CND"] + " " + conf.revision,
+                        conf.textStatus + " " + conf.revision
+                      ];
+                   }
+                   else {
+                      conf.docStatus = [conf.textStatus + " " + conf.revision];
+                   }
+                }
+
                 // configuration done - yay!
 
                 // annotate html element with RFDa
@@ -324,7 +341,6 @@ define(
                     conf.multipleWGs = false;
                     conf.wgHTML = "<a href='" + conf.wgURI + "'>" + conf.wg + "</a>";
                 }
-                if (conf.isCSPR && !conf.lcEnd) msg.pub("error", "Status is CSPR but no lcEnd is specified");
 
                 conf.stdNotExpected = (!conf.isStdTrack && conf.maturity == "WD");
 

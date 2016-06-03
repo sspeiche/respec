@@ -43,10 +43,11 @@ function build (options, cb) {
             console.log("Completing build ...");
             fs.writeFileSync(config.out
                         ,   "/* ReSpec " + version +
-                            " - Robin Berjon, http://berjon.com/ (@robinberjon) \n" +
-                            " - Steve Speicher, http://stevespeicher.me/ (@sspeiche) */\n" +
+                            " - Robin Berjon, http://berjon.com/ (@robinberjon)\n" +
+                            " - Steve Speicher, http://stevespeicher.me/ (@sspeiche)\n" +
+                            " - Nick Crossley (@ndjc) */\n" +
                             "/* Documentation: http://w3.org/respec/. */\n" +
-                            "/* See original source for licenses: https://github.com/sspeiche/respec. */\n" +
+                            "/* See original source for licenses: https://github.com/ndjc/respec. */\n" +
                             "respecVersion = '" + version + "';\n" +
                             fs.readFileSync(config.out, "utf8") + "\nrequire(['profile-oasis-common']);\n");
         }

@@ -6,8 +6,10 @@
     {{/if}}
   </p>
   <h1 class='title' id='title'{{#if doRDFa}} property='dcterms:title'{{/if}}>{{title}}</h1>
-  {{#if textStatus}}
-    <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{#if prependOASIS}}OASIS {{/if}}{{textStatus}}</h2>
+  {{#if docStatus}}
+    {{#each docStatus}}
+      <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{#if prependOASIS}}OASIS {{/if}}{{this}}</h2>
+    {{/each}}
   {{/if}}
   <h2 {{#if doRDFa}}property="dcterms:issued" datatype="xsd:dateTime" content="{{publishISODate}}"{{/if}}><time class='dt-published' datetime='{{dashDate}}'>{{publishHumanDate}}</time></h2>
   <dl>
