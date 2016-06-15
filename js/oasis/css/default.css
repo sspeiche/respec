@@ -61,6 +61,10 @@
 	padding: 3px 1em;
 }
 
+div.archaic {
+    background-color: rgba(238, 185, 183, 0.6);
+}
+
 .citationLabel {
     font-weight: bold;
 }

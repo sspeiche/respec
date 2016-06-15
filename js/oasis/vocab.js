@@ -57,6 +57,7 @@ define(
 			    var rdfsSeeAlso = "http://www.w3.org/2000/01/rdf-schema#seeAlso";
 			    var rdfsIsDefinedBy = "http://www.w3.org/2000/01/rdf-schema#isDefinedBy";
 			    var dcDescription = "http://purl.org/dc/terms/description";
+                var termStatus = "http://www.w3.org/2003/06/sw-vocab-status/ns#term_status";
 
 			    var onto = store.find(null, rdfType, owlOnto);
 			    if (onto.length != 1) { console.log("Can't locate owl:Ontology"); return null;}
@@ -82,14 +83,25 @@ define(
 			    var inputMap = [{predicate: rdfsLabel, name: "name"},
 			                    {predicate: rdfsComment, name: "comment"},
 			                    {predicate: rdfsSeeAlso, name: "seeAlso", multiValue: true},
-			                    {predicate: rdfsIsDefinedBy, name: "isDefinedBy"}];
+			                    {predicate: rdfsIsDefinedBy, name: "isDefinedBy"},
+			                    {predicate: termStatus, name: "termStatus"}
+			                    ];
 			    fillHBJson(store, classes, inputMap);
                 classes.sort(function(a, b) { return a.name.localeCompare(b.name); });
+                $.each(classes, function(i, it) {
+                    it.archaic = (it.termStatus && (it.termStatus === 'archaic'));
+                });
 
 			    var props = store.find(null, rdfType, rdfProp);
 			    conf.props = props;
 			    fillHBJson(store, props, inputMap);
                 props.sort(function(a, b) { return a.name.localeCompare(b.name); });
+                $.each(props, function(i, it) {
+                    if (it.termStatus) {
+                     console.log("term status " + it.termStatus + " found on "+it.name);
+                     it.archaic = (it.termStatus && (it.termStatus == 'archaic'));
+                    }
+                });
 
 			    var desc = store.find(null, rdfType, rdfDesc);
 			    conf.desc = desc;
