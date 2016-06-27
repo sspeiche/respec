@@ -148,6 +148,7 @@ define(
             ,   CND:            "CND"
             ,   CNPRD:          "CNPRD"
             ,   CN:             "CN"
+            ,   PRD:            "PRD"
             }
         ,   status2rdf: {
                 ED:             "oasis:ED",
@@ -176,6 +177,7 @@ define(
                 ,   CN:             "Committee Note"
                 ,   unofficial:     "Unofficial Draft"
                 ,   base:           "Document"
+                ,   PRD:            "Public Review Draft"
             }
         ,   status2long:    { }
         ,   stdTrackStatus: ["WD", "CSD", "CSPRD", "CS", "COS", "OS", "Errata"]
@@ -287,12 +289,16 @@ define(
                         this.status2text["CSD"] + " " + conf.revision,
                         conf.textStatus + " " + conf.revision
                       ];
+                      conf.textStatus1 = this.status2text["CSD"];
+                      conf.textStatus2 = this.status2text["PRD"];
                    }
                    else if (conf.isCNPR) {
                       conf.docStatus = [
                         this.status2text["CND"] + " " + conf.revision,
                         conf.textStatus + " " + conf.revision
                       ];
+                      conf.textStatus1 = this.status2text["CND"];
+                      conf.textStatus2 = this.status2text["PRD"];
                    }
                    else {
                       conf.docStatus = [conf.textStatus + " " + conf.revision];

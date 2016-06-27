@@ -8,7 +8,7 @@
   <h1 class='title' id='title'{{#if doRDFa}} property='dcterms:title'{{/if}}>{{title}}</h1>
   {{#if docStatus}}
     {{#each docStatus}}
-      <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{#if prependOASIS}}OASIS {{/if}}{{this}}</h2>
+      <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{this}}</h2>
     {{/each}}
   {{/if}}
   <h2 {{#if doRDFa}}property="dcterms:issued" datatype="xsd:dateTime" content="{{publishISODate}}"{{/if}}><time class='dt-published' datetime='{{dashDate}}'>{{publishHumanDate}}</time></h2>
@@ -143,8 +143,9 @@
     <span class='citationTitle'>{{title}}</span>.
     Edited by {{editorsHTML}}.
     {{publishHumanDate}}.
-    {{textStatus}} {{revision}}.
-    <a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a>.
+    {{#if prependOASIS}}OASIS {{/if}}{{#if textStatus1}}{{textStatus1}} {{revision}} / {{textStatus2}} {{revision}}.
+    {{else}}{{textStatus}} {{revision}}{{/if}}
+    {{#if thisVersion}}<a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a>.{{/if}}
     {{#if latestVersion}}Latest version: <a href='{{latestVersion}}'>{{latestVersion}}</a>.{{/if}}
     </p>
     </dd>{{/if}}
