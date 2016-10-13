@@ -38,7 +38,7 @@ define(
     			    var propDefaults = {
     			    	occurs:   {long: "http://open-services.net/ns/core#Zero-or-many", short: "Zero-or-many"},
     			    	readOnly: {long: "unspecified", short: "unspecified" },
-    			    	valType:  {long: "http://www.w3.org/2001/XMLSchema#string", short: "string"},
+    			    	valType:  {long: "unspecified", short: "unspecified" },
     			    	rep:      {long: "http://open-services.net/ns/core#Either", short: "Either"},
     			    	range:    {long: [], short: []},
     			    	description: {long: "", short: ""}
