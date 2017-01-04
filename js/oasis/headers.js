@@ -287,7 +287,7 @@ define(
                    if (conf.isCSPR) {
                       conf.docStatus = [
                         this.status2text["CSD"] + " " + conf.revision,
-                        conf.textStatus + " " + conf.revision
+                        this.status2text["PRD"] + " " + conf.revision
                       ];
                       conf.textStatus1 = this.status2text["CSD"];
                       conf.textStatus2 = this.status2text["PRD"];
@@ -295,7 +295,7 @@ define(
                    else if (conf.isCNPR) {
                       conf.docStatus = [
                         this.status2text["CND"] + " " + conf.revision,
-                        conf.textStatus + " " + conf.revision
+                        this.status2text["PRD"] + " " + conf.revision
                       ];
                       conf.textStatus1 = this.status2text["CND"];
                       conf.textStatus2 = this.status2text["PRD"];
@@ -305,7 +305,7 @@ define(
                    }
                 }
 
-                // configuration done - yay!
+                // configuration done!
 
                 // annotate html element with RFDa
                 if (conf.doRDFa) {
