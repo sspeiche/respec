@@ -82,6 +82,23 @@ Handlebars.registerHelper('eachRange', function(context, options) {
   return ret;
 });
 
+Handlebars.registerHelper('eachLineSlash', function(context, options) {
+  var fn = options.fn, inverse = options.inverse;
+  var sep = " /<br />";
+  var ret = "";
+
+  if(context && context.length > 0) {
+    ret = fn(context[0]);
+    for(var i=1, j=context.length; i<j; i++) {
+      ret = ret + sep + fn(context[i]);
+    }
+  } else {
+    ret = inverse(this);
+  }
+  return ret;
+});
+
+
 Handlebars.registerHelper('eachLine', function(context, options) {
   var fn = options.fn, inverse = options.inverse;
   var sep = "<br />";
