@@ -7,9 +7,9 @@
   </p>
   <h1 class='title' id='title'{{#if doRDFa}} property='dcterms:title'{{/if}}>{{title}}</h1>
   {{#if docStatus}}
-    {{#each docStatus}}
-      <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>{{this}}</h2>
-    {{/each}}
+    <h2 {{#if doRDFa}}property='bibo:subtitle' {{/if}}id='subtitle'>
+    {{#eachLine docStatus}}{{this}}{{/eachLine}}
+    </h2>
   {{/if}}
   <h2 {{#if doRDFa}}property="dcterms:issued" datatype="xsd:dateTime" content="{{publishISODate}}"{{/if}}><time class='dt-published' datetime='{{dashDate}}'>{{publishHumanDate}}</time></h2>
   <dl>

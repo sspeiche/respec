@@ -11,19 +11,19 @@
 
 {{#if classes}}
 <section><h2>RDFS Classes in this namespace</h2>
-<p>{{#each classes}}<a href="#{{name}}">{{name}}</a>, {{/each}}</p>
+<p>{{#eachRange classes}}<a href="#{{name}}">{{name}}</a>{{/eachRange}}</p>
 </section>
 {{/if}}
 
 {{#if props}}
 <section><h2>RDF Properties in this namespace</h2>
-<p>{{#each props}}<a href="#{{name}}">{{name}}</a>, {{/each}}</p>
+<p>{{#eachRange props}}<a href="#{{name}}">{{name}}</a>{{/eachRange}}</p>
 </section>
 {{/if}}
 
 {{#if desc}}
 <section><h2>RDF Descriptions(Individuals) in this namespace</h2>
-<p>{{#each desc}}<a href="#{{name}}">{{name}}</a>, {{/each}}</p>
+<p>{{#eachRange desc}}<a href="#{{name}}">{{name}}</a>{{/eachRange}}</p>
 </section>
 {{/if}}
 
