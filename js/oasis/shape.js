@@ -141,9 +141,27 @@ define(
 
 			    if (!shapeSubject) {
 			    	shape = store.find(null, rdfType, oslcShape);
-			    	if (shape.length < 1) { console.log("Can't locate oslc:ResourceShape"); return null;}
-			    	else if (shape.length > 1) { console.log("Found multiple shape definitions, using: " + shape[0].subject); }
-			    	var shapeSubject = shape[0].subject;
+			    	if (shape.length < 1) {
+			    	    console.log("Can't locate oslc:ResourceShape");
+			    	    return null;
+			    	}
+			    	else if (shape.length==1) {
+                        shapeSubject = shape[0].subject;
+			    	}
+			    	else {
+			    	    /* Look for one with the same name as the one we want */
+                        var result = null;
+			    	    var shapeName = /[^/#]*$/.exec(uri)[0];
+			    	    $.each(shape, function(i, it) {
+			    	        var foundName = /[^/#]*$/.exec(it.subject)[0];
+			    	        if (foundName === shapeName) {
+			    	           if (result!==null) { console.log("Found multiple shape definitions, using: " + it.subject); }
+			    	           result = it;
+			    	        }
+			    	    });
+			    	    if (!result) { console.log("Can't locate resource shape for "+uri); return null;}
+			    	    shapeSubject = result.subject;
+			    	}
 			    }
 			    var conf = {};
 			    conf.subject = shapeSubject;
