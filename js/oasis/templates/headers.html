@@ -1,7 +1,7 @@
 <div class='head'>
   <p class='logo'>
     {{#if prependOASIS}}
-      <a href='http://www.oasis-open.org/'><img width='203' height='54' src='http://docs.oasis-open.org/templates/OASISLogo.jpg' alt='OASIS' border='0'/></a>
+      <a href='https://www.oasis-open.org/'><img width='203' height='54' src='http://docs.oasis-open.org/templates/OASISLogo.jpg' alt='OASIS' border='0'/></a>
       <hr/>
     {{/if}}
   </p>
@@ -19,7 +19,11 @@
     {{#unless isNoTrack}}
       <br/><dt class='loc-heading'>This version:</dt>
       <dd><a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a></dd>
-      <br/><dt class='loc-heading'>Latest versions:</dt>
+        {{#if showPreviousVersion}}
+          <br/><dt class='loc-heading'>Previous version:</dt>
+          <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevVersion}}'>{{prevVersion}}</a></dd>
+        {{/if}}
+      <br/><dt class='loc-heading'>Latest version:</dt>
       <dd>{{#if latestVersion}}<a href='{{latestVersion}}'>{{latestVersion}}</a>{{else}}none{{/if}}</dd>
     {{/unless}}
     {{#if edDraftURI}}
@@ -33,10 +37,6 @@
     {{#if implementationReportURI}}
       <br/><dt class='loc-heading'>Implementation report:</dt>
       <dd><a href='{{implementationReportURI}}'>{{implementationReportURI}}</a></dd>
-    {{/if}}
-    {{#if showPreviousVersion}}
-      <br/><dt class='loc-heading'>Previous version:</dt>
-      <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevVersion}}'>{{prevVersion}}</a></dd>
     {{/if}}
     {{#if wg}}
       <br/><dt class='loc-heading'>Technical Committee:</dt>
@@ -94,7 +94,7 @@
      <ul>
      {{#each additionalArtifacts}}
        <li>
-       {{#if title}}{{title}},{{/if}}
+       {{#if title}}<span class='citationTitle'>{{title}}</span>,{{/if}}
        {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
        </li>
      {{/each}}
@@ -106,7 +106,7 @@
      <ul>
      {{#each supersedes}}
        <li>
-       {{#if title}}{{title}},{{/if}}
+       {{#if title}}<span class='citationTitle'>{{title}}</span>,{{/if}}
        {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
        </li>
      {{/each}}
@@ -118,7 +118,7 @@
      <ul>
      {{#each relatedWork}}
        <li>
-       {{#if title}}{{title}},{{/if}}
+       {{#if title}}<span class='citationTitle'>{{title}}</span>,{{/if}}
        {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
        </li>
      {{/each}}
