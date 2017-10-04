@@ -17,9 +17,9 @@
     },
     "author": "Robin Berjon",
     "devDependencies": {
-        "express":      "*"
-    ,   "requirejs":    "2.1.8"
-    ,   "prompt":       "0.2.12"
-    ,   "async":        "0.2.9"
+        "express": "*",
+        "requirejs": "2.1.8",
+        "prompt": "0.2.12",
+        "async": "0.2.9"
     }
 }
