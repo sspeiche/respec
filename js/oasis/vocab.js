@@ -45,8 +45,6 @@ define(
             	parser.addChunk(content);
             	parser.end();
 
-//			    alert("Somehow I made it!");
-
 			    var owlOnto = "http://www.w3.org/2002/07/owl#Ontology";
 			    var rdfsClass = "http://www.w3.org/2000/01/rdf-schema#Class";
 			    var rdfProp = "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property";
@@ -98,7 +96,6 @@ define(
                 props.sort(function(a, b) { return a.name.localeCompare(b.name); });
                 $.each(props, function(i, it) {
                     if (it.termStatus) {
-                     console.log("term status " + it.termStatus + " found on "+it.name);
                      it.archaic = (it.termStatus && (it.termStatus == 'archaic'));
                     }
                 });
