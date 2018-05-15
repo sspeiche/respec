@@ -171,7 +171,7 @@ define(
 			    if (typeURI.length > 0 && typeURI[0].object != "http://open-services.net/ns/core#Any")
                 {
                    conf.typeURI = typeURI[0].object;
-                   conf.name = /[#/][^/]*$/.exec(conf.typeURI)[0].substring(1);
+                   conf.name = /[#/][^#/]*$/.exec(conf.typeURI)[0].substring(1);
                 }
 
 			    var title = store.find(shapeSubject, dcTitle, null);
