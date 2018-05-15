@@ -13,6 +13,8 @@ define(
         return {
             show:   function (ui, _conf, _doc, _msg) {
                 msg = _msg, doc = _doc, conf = _conf;
+                var filename = "generated";
+                if (conf.shortName) filename = conf.shortName;
                 if (!conf.diffTool) conf.diffTool = "http://www5.aptest.com/standards/htmldiff/htmldiff.pl";
                 var supportsDownload = $("<a href='foo' download='x'>A</a>")[0].download === "x"
                 ,   self = this
@@ -57,12 +59,12 @@ define(
                                 })
                                 ;
                         }
-                        
+
                     }
                 ;
-                addButton("Save as HTML", self.toString(), "Overview.html", function () { self.toHTMLSource(); });
-                addButton("Save as XHTML5", self.toXML(5), "Overview.xhtml", function () { self.toXHTMLSource(5); });
-                addButton("Save as XHTML 1.0", self.toXML(1), "Overview.xhtml", function () { self.toXHTMLSource(1); });
+                addButton("Save as HTML", self.toString(), conf.shortName + ".html", function () { self.toHTMLSource(); });
+                addButton("Save as XHTML5", self.toXML(5), conf.shortName + ".xhtml", function () { self.toXHTMLSource(5); });
+                addButton("Save as XHTML 1.0", self.toXML(1), conf.shortName + ".xhtml", function () { self.toXHTMLSource(1); });
                 if (conf.diffTool && (conf.previousDiffURI || conf.previousURI)) {
                     $("<button>Diff</button>")
                         .appendTo($div)
