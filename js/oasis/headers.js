@@ -220,8 +220,11 @@ define(
                 }
                 conf.maturity = (this.status2maturity[conf.specStatus]) ? this.status2maturity[conf.specStatus] : conf.specStatus;
                 if (conf.specStatus === "ED") conf.thisVersion = conf.edDraftURI;
+                conf.thisPDFVersion = conf.thisVersion.replace('.html', '.pdf');
                 // TODO: Determine right URI production
                 // conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
+                conf.latestPDFVersion = "";
+                if (conf.latestVersion) conf.latestPDFVersion = conf.latestVersion.replace('.html', '.pdf')
                 if (!conf.tcBaseURI) conf.tcBaseURI = "https://www.oasis-open.org/committees";
                 if (conf.previousPublishDate) {
                     if (!conf.previousMaturity)
@@ -234,6 +237,7 @@ define(
                               conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
                 }
                 if (!conf.prevVersion) conf.prevVersion = "";
+                conf.prevPDFVersion = conf.prevVersion.replace('.html', '.pdf');
                 if (conf.prevRecShortname && !conf.prevRecURI) conf.prevRecURI = "http://docs.oasis-open.org/" + conf.prevRecShortname;
                 if (!conf.editors || conf.editors.length === 0) msg.pub("error", "At least one editor is required");
                 var peopCheck = function (i, it) {

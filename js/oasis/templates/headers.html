@@ -18,13 +18,16 @@
   <dl>
     {{#unless isNoTrack}}
       <br/><dt class='loc-heading'>This version:</dt>
-      <dd><a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a> (Authoritative)</dd>
+      <dd><a class='u-url' href='{{thisVersion}}'>{{thisVersion}}</a> (Authoritative)<br>
+      <a class='u-url' href='{{thisPDFVersion}}'>{{thisPDFVersion}}</a></dd>
         {{#if showPreviousVersion}}
           <br/><dt class='loc-heading'>Previous version:</dt>
-          <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevVersion}}'>{{prevVersion}}</a></dd>
+          <dd><a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevVersion}}'>{{prevVersion}}</a><br>
+          <a {{#if doRDFa}}rel="dcterms:replaces"{{/if}} href='{{prevPDFVersion}}'>{{prevPDFVersion}}</dd>
         {{/if}}
       <br/><dt class='loc-heading'>Latest version:</dt>
-      <dd>{{#if latestVersion}}<a href='{{latestVersion}}'>{{latestVersion}}</a> (Authoritative){{else}}none{{/if}}</dd>
+      <dd>{{#if latestVersion}}<a href='{{latestVersion}}'>{{latestVersion}}</a> (Authoritative)<br>
+      <a href='{{latestPDFVersion}}'>{{latestPDFVersion}}</a>{{else}}none{{/if}}</dd>
     {{/unless}}
     {{#if edDraftURI}}
       <br/><dt class='loc-heading'>Latest editor's draft:</dt>
@@ -118,7 +121,7 @@
      <ul>
      {{#each relatedWork}}
        <li>
-       {{#if title}}<span class='citationTitle'>{{title}}</span>,{{/if}}
+       {{#if title}}<span class='citationTitle'>{{title}}</span>.{{#if status}} {{status}}: {{/if}}{{/if}}
        {{#if href}}<a href='{{href}}'>{{href}}</a>{{/if}}
        </li>
      {{/each}}

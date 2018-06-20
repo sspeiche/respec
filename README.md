@@ -10,7 +10,7 @@ well such as OASIS.
 Important Note
 ==============
 
-ReSpec is not endorsed by W3C and nobody should expect the W3C Webmaster to provide advice on
+ReSpec is not endorsed by W3C or OASIS, and nobody should expect the W3C Webmaster or OASIS TC Administratorto provide advice on
 problems encountered with ReSpec, or on why it may be failing to produce pubrules-compliant
 content.
 
