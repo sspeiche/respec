@@ -31,6 +31,7 @@ define([
         ,   "oasis/headers"
 /*      ,   "oasis/abstract" */
         ,   "oasis/conventions"
+        ,   "oasis/conformance"
         ,   "core/data-transform"
         ,   "core/data-include"
         ,   "core/inlines"
@@ -48,6 +49,7 @@ define([
         ,   "oasis/structure"
         ,   "oasis/informative"
         ,   "core/id-headers"
+        ,   "oasis/conformance-table"
         ,   "oasis/aria"
         ,   "oasis/vocab"
         ,   "oasis/shape"

@@ -6,13 +6,14 @@
 <link rel="stylesheet" type="text/css" href="../../styles/oslc-ccm-styles.css" />
 <link rel="stylesheet" type="text/css" href="../../styles/table-styles.css" />
 <link rel="stylesheet" type="text/css" href="../../styles/definition-styles.css" />
-<script src='https://ndjc.github.io/respec/builds/oasis/respec-oasis-common.js' async class='remove'></script>
+<!--script src='https://ndjc.github.io/respec/builds/oasis/respec-oasis-common.js' async class='remove'></script-->
+<script src='file:///Users/ndjc/git/respec/builds/oasis/respec-oasis-common.js' async class='remove'></script>
 <script class='remove'>
 	var respecConfig = {
-	   	// specification status (WD, CSD, CSPRD, CS, COS, OS, Errata, CND, CNPRD, CN).
-		// If in doubt use WD.
+	   	// specification status (ED, CSD, CSPRD, CS, COS, OS, Errata, CND, CNPRD, CN).
+		// If in doubt use ED.
 		// See http://docs.oasis-open.org/specGuidelines/ndr/namingDirectives.html#stage
-		specStatus : "WD",
+		specStatus : "ED",
 
         // the specification's short name with version but no dots
         shortName : "oslc-xxx-10",
@@ -146,12 +147,8 @@
     and you have enough concepts that it is worth elaborating on.
     A reasonable example is the <a href="http://www.w3.org/TR/json-ld/#basic-concepts">JSON-LD Syntax spec</a>.</em></p>
 </section>
-<section id='conformance'>
-  <h3>Conformance to other standards</h3>
-  <p>OSLC XXX servers MUST conform to [[!OSLCCore2]], and SHOULD conform to [[!OSLCCore3]] (and hence [[!LDP]]).</p>
-  <p><em>Add here any requirements for conformance to other standards.</em></p>
-</section>
 <section id='references'>
+  <!-- Note that the header levels you use do not really matter - ReSpec will fix them to match the section nesting -->
   <h3>References</h3>
 </section>
 </section>
@@ -159,6 +156,19 @@
   <h2>RDF Namespaces</h2>
   <p><em>Describe here any RDF namespaces defined by this standard, and their recommended prefixes.
     Also describe any other RDF namespace prefixes used in examples.</em></p>
+</section>
+<section id='conformance'>
+  <h2>Conformance</h2>
+  <section id='conformance-other'>
+    <h3>Conformance to other standards</h3>
+    <p>OSLC XXX servers MUST conform to [[!OSLCCore2]], and SHOULD conform to [[!OSLCCore3]] (and hence [[!LDP]]).</p>
+    <p><em>Add here any requirements for conformance to other standards.</em></p>
+  </section>
+  <section id='conformance-clauses'>
+    <h3>Conformance Clauses</h3>
+    <p>The following table summarizes the conformance requirements for OSLC XXX.</p>
+    <!-- ReSpec will insert a conformance clause table here -->
+    </section>
 </section>
 <section>
   <h2>Capability</h2>
@@ -171,17 +181,19 @@
     <p><em><strong>Writing conformance clauses/statements: </strong> Create individual sections for each conformance clause.
       Each clause should cleanly map to a test case, see [[LDP]] spec and <a href="http://w3c.github.io/ldp-testsuite">LDP testsuite</a> for an example of this model.</em></p>
     <section id="clausea">
-      <h2 class="normal"> OSLC specifications MUST provide [[RFC2116]] keywords that SHOULD be in ALL CAPS and MAY include client and/or server needs. </h2>
+      <p class="conformance" strength="MUST, SHOULD" title="Use appropriate [[RFC2116]] keywords">OSLC specifications MUST provide [[RFC2116]] keywords that SHOULD be in ALL CAPS and MAY include client and/or server needs.</p>
     </section>
     <section id="clauseb">
-      <h2 class="normal"> It is RECOMMENDED that OSLC specifications include examples whenever possible. </h2>
+      <p class="conformance" strength="Recommended">It is RECOMMENDED that OSLC specifications include examples whenever possible.</p>
     </section>
   </section>
   <section>
     <h2>Shape</h2>
     <p><em>For every resource that is defined, define a shape for it.
       You may have additional shapes for certain scenarios.
-      Shapes must be published as separate Turtle files.</em></p>
+      Shapes are published separately as Turtle files;
+      you may have one shape per Turtle source file, or put several related shapes in one file;
+      either way, you must have one data-include for each shape, using the right anchor URL.</em></p>
     <div title='RDF Shape for Example1'
 				data-include='./template-spec-shapes.ttl#ExampleShape1'
 				data-oninclude='shapeToSpec'

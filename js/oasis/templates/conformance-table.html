@@ -1,0 +1,13 @@
+{{#unless conformanceIntro}}
+<p>
+  Implementations of this specification need to satisfy the following conformance clauses.
+</p>
+{{/unless}}
+<table id='conformance-table' class='conformance-table'>
+  <thead>
+    <tr><th>Clause Number</th><th>Strength</th><th>Requirement</th></tr>
+  </thead>
+  {{#each conformanceClauseList}}
+    <tr><td class='conformance-label'><a href="#{{id}}">{{clause}}</a></td><td><em class="rfc2119">{{strength}}</em></td><td>{{{text}}}</td></tr>
+  {{/each}}
+</table>
