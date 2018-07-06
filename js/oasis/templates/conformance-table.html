@@ -5,9 +5,13 @@
 {{/unless}}
 <table id='conformance-table' class='conformance-table'>
   <thead>
-    <tr><th>Clause Number</th><th>Strength</th><th>Requirement</th></tr>
+    <tr><th>Clause Number</th>
+    {{#if conformanceClauseStrength}}<th>Strength</th>{{/if}}
+    <th>Requirement</th></tr>
   </thead>
   {{#each conformanceClauseList}}
-    <tr><td class='conformance-label'><a href="#{{id}}">{{clause}}</a></td><td><em class="rfc2119">{{strength}}</em></td><td>{{{text}}}</td></tr>
+    <tr><td class='conformance-label'><a href="#{{id}}">{{clause}}</a></td>
+    {{#if ../conformanceClauseStrength}}<td><em class="rfc2119">{{strength}}</em></td>{{/if}}
+    <td>{{{text}}}</td></tr>
   {{/each}}
 </table>
