@@ -17,7 +17,7 @@ function buildOASIS (versionSnapshot, cb) {
         opts.version = versionSnapshot;
     }
     var versioned = pth.join(builds, "respec-oasis-common-" + opts.version + ".js");
-    console.log("Preparing to builds to: "+builds);
+    console.log("Preparing build to: "+builds);
     console.log("Preparing to write: "+versioned);
     b.build(opts, function () {
         if (versionSnapshot) fs.writeFileSync(versioned, fs.readFileSync(latest, "utf8"), { encoding: "utf8" });

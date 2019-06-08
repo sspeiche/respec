@@ -11,11 +11,11 @@ var requireConfig = {
         }
     }
 };
-if ("respecVersion" in window && respecVersion) {
-    requireConfig.paths = {
-        "ui": "https://raw.github.com/darobin/respec/gh-pages/js/ui",
-    };
-}
+//if ("respecVersion" in window && respecVersion) {
+//    requireConfig.paths = {
+//        "ui": "https://raw.github.com/darobin/respec/gh-pages/js/ui",
+//    };
+//}
 
 require.config(requireConfig);
 
@@ -29,7 +29,8 @@ define([
         ,   "core/style"
         ,   "oasis/style"
         ,   "oasis/headers"
-/*        ,   "oasis/abstract" */
+/*      ,   "oasis/abstract" */
+        ,   "oasis/conventions"
         ,   "oasis/conformance"
         ,   "core/data-transform"
         ,   "core/data-include"
@@ -40,20 +41,24 @@ define([
         ,   "core/highlight"
         ,   "core/best-practices"
         ,   "core/figures"
-        ,   "core/biblio"
+        ,   "oasis/biblio"
         ,   "core/rdfa"
         ,   "core/webidl-oldschool"
         ,   "core/dfn"
         ,   "core/fix-headers"
-        ,   "core/structure"
+        ,   "oasis/structure"
         ,   "oasis/informative"
         ,   "core/id-headers"
+        ,   "oasis/conformance-table"
         ,   "oasis/aria"
-        ,   "oasis/vocab"        
-        ,   "oasis/shape"        
+        ,   "oasis/vocab"
+        ,   "oasis/shape"
         ,   "core/shiv"
         ,   "core/remove-respec"
         ,   "core/location-hash"
+        ,   "ui/about-respec"
+        ,   "ui/save-html"
+        ,   "ui/search-specref"
         ],
         function (domReady, runner, ui) {
             var args = Array.prototype.slice.call(arguments);

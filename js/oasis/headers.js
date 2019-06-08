@@ -8,6 +8,8 @@
 // CONFIGURATION
 //  - specStatus: the short code for the specification's maturity level or type (required)
 //  - shortName: the small name that is used after /TR/ in published reports (required)
+//  - revision: the revision number of the document at its given stage (required)
+//  - citationLabel: the citation label for the spec. If missing, no citation section is generated.
 //  - editors: an array of people editing the document (at least one is required). People
 //      are defined using:
 //          - name: the person's name (required)
@@ -117,13 +119,13 @@ define(
                 else {
                     ret += "<span" + rn + " class='p-name fn'>" + p.name + "</span>";
                 }
+                if (p.mailto) {
+                    ret += " (<span class='ed_mailto'><a class='u-email email' " + rm + " href='mailto:" + p.mailto + "'>" + p.mailto + "</a></span>)";
+                }
                 if (p.company) {
                     ret += ", ";
                     if (p.companyURL) ret += "<a" + rwu + " class='p-org org h-org h-card' href='" + p.companyURL + "'>" + p.company + "</a>";
                     else ret += p.company;
-                }
-                if (p.mailto) {
-                    ret += ", <span class='ed_mailto'><a class='u-email email' " + rm + " href='mailto:" + p.mailto + "'>" + p.mailto + "</a></span>";
                 }
                 if (p.note) ret += " (" + p.note + ")";
                 if (this.doRDFa !== false ) ret += "</span>\n";
@@ -131,11 +133,12 @@ define(
             }
             return new Handlebars.SafeString(ret);
         });
-        
+
 
         return {
             status2maturity:    {
-                WD:             "WD"
+                ED:             "ED"
+            ,   WD:             "WD"
             ,   CSD:            "CSD"
             ,   CSPRD:          "CSPRD"
             ,   CS:             "CS"
@@ -145,8 +148,10 @@ define(
             ,   CND:            "CND"
             ,   CNPRD:          "CNPRD"
             ,   CN:             "CN"
+            ,   PRD:            "PRD"
             }
         ,   status2rdf: {
+                ED:             "oasis:ED",
                 WD:             "oasis:WD",
                 CSD:            "oasis:CSD",
                 CSPRD:          "oasis:CSPRD",
@@ -159,7 +164,8 @@ define(
                 CN:             "oasis:CN"
             }
         ,   status2text: {
-            		WD:             "Working Draft"
+            		ED:             "Editor's Draft"
+            	,	WD:             "Working Draft"
                 ,   CSD:            "Committee Specification Draft"
                 ,   CSPRD:          "Committee Specification Public Review Draft"
                 ,   CS:             "Committee Specification"
@@ -171,12 +177,14 @@ define(
                 ,   CN:             "Committee Note"
                 ,   unofficial:     "Unofficial Draft"
                 ,   base:           "Document"
+                ,   PRD:            "Public Review Draft"
             }
         ,   status2long:    { }
         ,   stdTrackStatus: ["WD", "CSD", "CSPRD", "CS", "COS", "OS", "Errata"]
         ,   noTrackStatus:  ["CND", "CNPRD", "CN", "unofficial", "base"]
         ,   precededByAn:   ["ED"]
-                        
+        ,   unPublished:    ["ED","WD","unofficial", "base"]
+
         ,   run:    function (conf, doc, cb, msg) {
                 msg.pub("start", "oasis/headers");
 
@@ -192,6 +200,7 @@ define(
                 conf.isCCBY = conf.license === "cc-by";
                 if (!conf.specStatus) msg.pub("error", "Missing required configuration: specStatus");
                 if (!conf.shortName) msg.pub("error", "Missing required configuration: shortName");
+                if (!conf.revision) msg.pub("error", "Missing required configuration: revision");
                 conf.title = doc.title || "No Title";
                 if (!conf.subtitle) conf.subtitle = "";
                 if (!conf.publishDate) {
@@ -211,8 +220,12 @@ define(
                 }
                 conf.maturity = (this.status2maturity[conf.specStatus]) ? this.status2maturity[conf.specStatus] : conf.specStatus;
                 if (conf.specStatus === "ED") conf.thisVersion = conf.edDraftURI;
+                conf.thisPDFVersion = conf.thisVersion.replace('.html', '.pdf');
                 // TODO: Determine right URI production
                 // conf.latestVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/";
+                conf.latestPDFVersion = "";
+                if (conf.latestVersion) conf.latestPDFVersion = conf.latestVersion.replace('.html', '.pdf')
+                if (!conf.tcBaseURI) conf.tcBaseURI = "https://www.oasis-open.org/committees";
                 if (conf.previousPublishDate) {
                     if (!conf.previousMaturity)
                         msg.pub("error", "previousPublishDate is set, but not previousMaturity");
@@ -223,11 +236,8 @@ define(
                     conf.prevVersion = "http://docs.oasis-open.org/" + conf.wgShortName + "/" + conf.previousPublishDate.getFullYear() + "/" + pmat + "-" +
                               conf.shortName + "-" + utils.concatDate(conf.previousPublishDate) + "/";
                 }
-                else {
-                    if (conf.specStatus !== "WD" && !conf.noStdTrack && !conf.isNoTrack)
-                        msg.pub("error", "Document on track but no previous version.");
-                    if (!conf.prevVersion) conf.prevVersion = "";
-                }
+                if (!conf.prevVersion) conf.prevVersion = "";
+                conf.prevPDFVersion = conf.prevVersion.replace('.html', '.pdf');
                 if (conf.prevRecShortname && !conf.prevRecURI) conf.prevRecURI = "http://docs.oasis-open.org/" + conf.prevRecShortname;
                 if (!conf.editors || conf.editors.length === 0) msg.pub("error", "At least one editor is required");
                 var peopCheck = function (i, it) {
@@ -239,6 +249,7 @@ define(
                 conf.multipleEditors = conf.editors.length > 1;
                 conf.multipleAuthors = conf.authors && conf.authors.length > 1;
                 conf.multipleChairs = conf.chairs && conf.chairs.length > 1;
+                conf.editorsHTML = utils.joinAnd($.isArray(conf.editors) ? conf.editors : [conf.editors], function(ed) {return ed.name;});
                 $.each(conf.alternateFormats || [], function (i, it) {
                     if (!it.uri || !it.label) msg.pub("error", "All alternate formats must have a uri and a label.");
                 });
@@ -266,16 +277,40 @@ define(
                 conf.notStd = (conf.specStatus !== "OS");
                 conf.isUnofficial = conf.specStatus === "unofficial";
                 conf.prependOASIS = !conf.isUnofficial;
-                conf.isWD = (conf.specStatus === "WD");
+                conf.isWD = (conf.specStatus === "WD" || conf.specStatus === "ED");
                 conf.isCS = (conf.specStatus === "CS");
                 conf.isCSPR = (conf.specStatus === "CSPRD");
+                conf.isCNPR = (conf.specStatus === "CNPRD");
                 conf.isCOS = (conf.specStatus === "COS");
                 conf.isOS = (conf.specStatus === "OS");
                 conf.isAE = (conf.specStatus === "Errata");
                 conf.dashDate = utils.concatDate(conf.publishDate, "-");
                 conf.publishISODate = utils.isoDate(conf.publishDate) ;
-                // configuration done - yay!
-                
+
+                if ($.inArray(conf.specStatus, this.unPublished) < 0) {
+                   if (conf.isCSPR) {
+                      conf.docStatus = [
+                        this.status2text["CSD"] + " " + conf.revision,
+                        this.status2text["PRD"] + " " + conf.revision
+                      ];
+                      conf.textStatus1 = this.status2text["CSD"];
+                      conf.textStatus2 = this.status2text["PRD"];
+                   }
+                   else if (conf.isCNPR) {
+                      conf.docStatus = [
+                        this.status2text["CND"] + " " + conf.revision,
+                        this.status2text["PRD"] + " " + conf.revision
+                      ];
+                      conf.textStatus1 = this.status2text["CND"];
+                      conf.textStatus2 = this.status2text["PRD"];
+                   }
+                   else {
+                      conf.docStatus = [conf.textStatus + " " + conf.revision];
+                   }
+                }
+
+                // configuration done!
+
                 // annotate html element with RFDa
                 if (conf.doRDFa) {
                     if (conf.rdfStatus) {
@@ -293,25 +328,13 @@ define(
                     }
                     $("html").attr("prefix", prefixes);
                 }
-                
+
                 // handle abstract
                 var $shortAbstract = $("#abstract");
                 if (!$shortAbstract.length)
                     msg.pub("error", "A short abstract is required.");
                 conf.shortAbstract = $shortAbstract.html();
                 $shortAbstract.remove();
-                
-                // handle SotD
-                var $sotd = $("#sotd");
-                if ((!conf.isNoTrack) && !$sotd.length)
-                    msg.pub("error", "A custom SotD paragraph is required for your type of document.");
-                conf.sotdCustomParagraph = $sotd.html();
-                $sotd.remove();
-                conf.status = sotdTmpl(conf);
-
-                // insert into document and mark with microformat
-                $("body", doc).prepend($(headersTmpl(conf)))
-                              .addClass("h-entry");
 
                 if ($.isArray(conf.wg)) {
                     conf.multipleWGs = conf.wg.length > 1;
@@ -328,11 +351,21 @@ define(
                     conf.multipleWGs = false;
                     conf.wgHTML = "<a href='" + conf.wgURI + "'>" + conf.wg + "</a>";
                 }
-                if (conf.isCSPR && !conf.lcEnd) msg.pub("error", "Status is CSPR but no lcEnd is specified");
 
                 conf.stdNotExpected = (!conf.isStdTrack && conf.maturity == "WD");
-                
-                
+
+                // handle SotD
+                var $sotd = $("#sotd");
+                if ((!conf.isNoTrack) && !$sotd.length)
+                    msg.pub("error", "A custom SotD paragraph is required for your type of document.");
+                conf.sotdCustomParagraph = $sotd.html();
+                $sotd.remove();
+                conf.status = sotdTmpl(conf);
+
+                // insert into document and mark with microformat
+                $("body", doc).prepend($(headersTmpl(conf)))
+                              .addClass("h-entry");
+
                 var $notices = $("#notices");
 
                 $(noticesTmpl(conf)).insertBefore($("#toc"));

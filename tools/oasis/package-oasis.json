@@ -1,6 +1,6 @@
 {
     "name": "respec",
-    "version": "0.0.6",
+    "version": "1.0.1",
     "description": "Specification Edition Support Tool (OASIS Profile).",
     "main": "index.js",
     "directories": {
@@ -13,14 +13,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/sspeiche/respec.git"
+        "url": "git://github.com/ndjc/respec.git"
     },
-    "author": "Steve Speicher",
+    "author": "Robin Berjon, Steve Speicher, Nick Crossley",
     "devDependencies": {
-        "express":      "*"
-    ,   "requirejs":    "2.1.8"
-    ,   "prompt":       "0.2.12"
-    ,   "async":        "0.2.9"
-    ,    "n3-browser.min": "*"
+        "async": "^2.6.1",
+        "express": "^4.16.3",
+        "prompt": "^1.0.0",
+        "requirejs": "^2.3.5"
     }
 }
